@@ -14,6 +14,7 @@ function GamePage() {
     const [board , setBoard] = useState(chess.board());
     const [started , setStarted] = useState(false);
     const [color , setColor] = useState(null);
+    const [turn, setTurn] = useState('black');
     useEffect (() => {
         if(!socket){
             return;
@@ -28,7 +29,6 @@ function GamePage() {
                     console.log("game initialized ");
                     break;
                 case MOVE : 
-                    console.log("making move");
                     const move = message.payload;
                     chess.move(move);
                     setBoard(chess.board());
@@ -39,8 +39,16 @@ function GamePage() {
                     break;
             }
         }
-    },[socket])
-    if(!socket) return <div>Connecting...</div>
+    },[socket]);
+
+    useEffect ( () => {
+        setTurn(chess.turn());
+    } , [socket, chess, board]);
+
+    if(!socket) return ( <div className='text-white flex justify-center pt-10 text-3xl'>
+                            Connecting...
+                        </div>
+                );
     return (
         <div className='flex justify-center '>
             <div className="pt-8 max-w-screen-lg w-full">
@@ -52,7 +60,10 @@ function GamePage() {
                         <div className='pt-8'>
                             <span className='text-white'>
                                 { color && <span>You are </span>}{color == 'white' && "Black"} {color == 'black' && "White"}
-
+                            </span>
+                            <br />
+                            <span className='text-white'>
+                                { color && <span>Its {turn === 'w' ? 'Black' : "White"}'s turn </span>}
                             </span>
                             {!started && <Button onClick={() => {
                                 socket.send(JSON.stringify({

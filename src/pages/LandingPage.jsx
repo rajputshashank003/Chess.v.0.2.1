@@ -12,7 +12,7 @@ function LandingPage() {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className='flex justify-center'>
                         <img src="/chessboard.jpeg" 
-                        className='max-w-96' />
+                        className='max-w-100' />
                     </div>
                     <div className='pt-16'>
                         <div className="flex justify-center">
