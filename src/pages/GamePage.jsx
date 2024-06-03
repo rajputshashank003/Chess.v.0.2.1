@@ -3,6 +3,7 @@ import ChessBoard from '../components/ChessBoard.jsx'
 import Button from '../components/Button.jsx'
 import UseSocket from '../hooks/useSocket.jsx';
 import {Chess } from "chess.js";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const INIT_GAME = 'init_game';
 export const MOVE = 'move';
@@ -15,6 +16,7 @@ function GamePage() {
     const [started , setStarted] = useState(false);
     const [color , setColor] = useState(null);
     const [turn, setTurn] = useState('black');
+    const [findingPlayer ,setFindingPlayer] = useState(false);
     useEffect (() => {
         if(!socket){
             return;
@@ -25,6 +27,7 @@ function GamePage() {
                 case INIT_GAME :
                     setBoard(chess.board());
                     setStarted(true);
+                    setFindingPlayer(false);
                     setColor(message.payload.color);
                     console.log("game initialized ");
                     break;
@@ -63,15 +66,23 @@ function GamePage() {
                             </span>
                             <br />
                             <span className='text-white'>
-                                { color && <span>Its {turn === 'w' ? 'Black' : "White"}'s turn </span>}
+                                { color && <span>{turn === 'w' && color == 'white' && "It's yours turn" } 
+                                    {turn === 'b' && color == 'black' && "It's yours turn" } </span>
+                                }
                             </span>
                             {!started && <Button onClick={() => {
                                 socket.send(JSON.stringify({
                                     type: INIT_GAME,
                                 }))
-                            }}>
-                                Play
-                            </Button>}
+                                setFindingPlayer(true);
+                            }} disabled={findingPlayer}
+                            >
+                               {!findingPlayer ? "Play" : <CircularProgress />}
+                            </Button>
+                            }
+                            {
+                                findingPlayer && <span className='text-white flex justify-center '><br />Finding Player</span>
+                            }
                         </div>
                     </div>
                 </div>
