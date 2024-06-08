@@ -1,10 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button.jsx';
+import UserName from '../components/UserName.jsx';
 
 function LandingPage() {
     const navigate = useNavigate();
-
 
     return (
         <div className='flex justify-center'>
@@ -20,8 +20,9 @@ function LandingPage() {
                                 Play Chess Online on #3 Site!
                             </h1>
                         </div>
-                        <div className='mt-8 flex justify-center'>
-                            <Button onClick={() => {navigate("/game")}}>
+                        <div className='mt-8 flex flex-col items-center space-y-4'>
+                            <UserName />
+                            <Button onClick={() => navigate("/game")}>
                                 Play Online
                             </Button>
                         </div>
