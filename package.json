@@ -13,7 +13,6 @@
     "@mui/material": "^5.15.19",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "chess.js": "^1.0.0-beta.8",
-    "lottie-react-web": "^2.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
