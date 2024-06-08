@@ -3,9 +3,6 @@ import ChessBoard from '../components/ChessBoard.jsx';
 import Button from '../components/Button.jsx';
 import UseSocket from '../hooks/useSocket.jsx';
 import { Chess } from "chess.js";
-import CircularProgress from '@mui/material/CircularProgress';
-import animation from "../../public/SearchingAnimation.json";
-import Lottie from 'lottie-react-web';
 
 export const INIT_GAME = 'init_game';
 export const MOVE = 'move';
@@ -118,10 +115,8 @@ function GamePage() {
                             {/* Finding player message */}
                             {findingPlayer && (
                                 <span className='text-white text-lg font-mono '>
-                                    <Lottie
-                                        options={{ animationData : animation }}
-                                        width={100}
-                                        height={100}
+                                    <img
+                                        src="/SearchingAnimation3.svg"
                                     />
                                     do min...
                                 </span>
