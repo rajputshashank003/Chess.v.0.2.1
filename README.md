@@ -26,7 +26,7 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 
 To set up the project locally, you'll need to clone and run both the front-end and back-end repositories. Follow these steps:
 
-### Front-end Setup
+### Front-end Back-end Setup
 
 1. **Clone the Front-end Repository:**
 
