@@ -24,22 +24,32 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 
 ## Installation
 
-To set up the project locally, follow these steps:
+To set up the project locally, you'll need to clone and run both the front-end and back-end repositories. Follow these steps:
 
-1. **Clone the repository:**
+### Front-end Setup
+
+1. **Clone the Front-end Repository:**
+
+   First, clone the repository for the front-end:
 
    ```bash
    git clone https://github.com/rajputshashank003/Chess.v.0.2.1.git
-   cd client
-   npm install
+   cd Chess.v.0.2.1
+   npm install 
    npm run dev
-   cd ..
+
+2. **Clone the Back-end Repository:**
+
+   First, clone the repository for the front-end:
+
+   ```bash
    git clone https://github.com/rajputshashank003/chess-v2-api.git
-   cd api 
-   npm install
+   cd chess-v2-api
+   npm install 
    node src/server.js
 
 2. **Set up environment variables:**
+    remove .example from .env.example
 
 ## Contributing
 
