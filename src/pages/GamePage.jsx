@@ -3,6 +3,8 @@ import ChessBoard from '../components/ChessBoard.jsx';
 import Button from '../components/Button.jsx';
 import UseSocket from '../hooks/useSocket.jsx';
 import { Chess } from "chess.js";
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export const INIT_GAME = 'init_game';
 export const MOVE = 'move';
@@ -18,6 +20,7 @@ function GamePage() {
     const [findingPlayer ,setFindingPlayer] = useState(false);
     const [opponentsTurn , setOpponentsTurn] = useState(false);
     const [moveCount , setMoveCount] = useState(null);
+    const [showCharacters , setShowCharacters] = useState(false);
 
     const [currUser , setCurrUser ] = useState(() => {
         const curr = localStorage.getItem("currUser");
@@ -64,17 +67,26 @@ function GamePage() {
     } , [socket, chess, board, turn, color]);
 
     if(!socket) return (
-        <div className='text-white flex justify-center pt-10 text-3xl'>
-            Connecting...
-        </div>
+        <>
+            <div className='text-white flex justify-center pt-10 text-3xl'>
+                Connecting<img className='h-10 pt-5' src="/SearchingAnimation3.svg"/>
+            </div>
+            <div className='text-white flex justify-center pt-10 text-xl'>
+                Wait for 50 sec
+            </div>
+        </>
     );
+
+    const handleShowCharacter = () => {
+        setShowCharacters( (prev) => !prev);
+    }
 
     return (
         <div className='flex justify-center'>
             <div className="pt-8 max-w-screen-lg w-full">
                 <div className="grid grid-cols-6 gap-4 w-full">
                     <div className='col-span-4 flex justify-center'>
-                        <ChessBoard chess={chess} setBoard={setBoard} socket={socket} board={board} disabled={opponentsTurn} />
+                        <ChessBoard chess={chess} setBoard={setBoard} socket={socket} board={board} disabled={opponentsTurn} showCharacters={showCharacters} />
                     </div>
                     <div className='col-span-2 bg-slate-900 w-full flex justify-center'>
                         <div className='pt-8 flex flex-col items-center space-y-2'>
@@ -121,6 +133,18 @@ function GamePage() {
                                     do min...
                                 </span>
                             )}
+                        </div>
+                        <div style={{ position: 'absolute',bottom: '0', left: '0', padding: "1rem" }} 
+                            className='text-white'
+                            >
+                            <FormControlLabel
+                                control={<Switch 
+                                    checked={showCharacters}
+                                    onChange={handleShowCharacter}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />}
+                                label="Board Coordinates"
+                            />
                         </div>
                     </div>
                 </div>

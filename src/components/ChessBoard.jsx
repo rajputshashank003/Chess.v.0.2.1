@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { MOVE } from '../pages/GamePage.jsx';
 import { toast } from "react-toastify";
 
-function ChessBoard({chess , board, socket, setBoard, disabled}) {
+function ChessBoard({chess , board, socket, setBoard, disabled ,showCharacters}) {
+    console.log(board );
     const [from , setFrom] = useState(null);
+    
     return (
-        <div className='text-white-200'>
+        <div className='text-white-200 '>
             {board.map( (row , i) => {
                 return <div key={i} className='flex'>
                     {row.map( (square, j) => {
@@ -34,13 +36,19 @@ function ChessBoard({chess , board, socket, setBoard, disabled}) {
                                     setBoard(chess.board());
                                     console.log({from , to : squareRepresent});
                                 }
-                            }} className={`w-16 h-16 ${(i+j)%2 === 0 ? 'bg-green-500' : 'bg-green-100'}`}>
-                                <div className=" w-full flex justify-center h-full">
-                                    <div className="flex justify-center h-full flex-col">
-                                        {square ? <img className='w-13' src={`/${square?.color === "b" ? 
-                                        square?.type : `${square?.type?.toUpperCase()} copy`}.png`} />: 
-                                        null}
+                            }} className={`w-16 h-16 ${(i+j)%2 === 0 ? "bg-green-500" : "bg-green-100" }` }>
+                                <div className=" w-full flex justify-center h-full ">
+                                    <div className={`flex justify-center h-full flex-col  `}>
+                                        {square ? <img 
+                                                        className={`w-13 ${from === squareRepresent ? "duration-300 animate-bounce" : "" }`} 
+                                                        src={`/${square?.color === "b" ? 
+                                                        square?.type : `${square?.type?.toUpperCase()} copy`}.png`} 
+                                                    /> 
+                                                    : 
+                                                    null
+                                        }
                                     </div>
+                                    <div>{showCharacters && squareRepresent}</div>
                                 </div>
                             </div>
                         )
