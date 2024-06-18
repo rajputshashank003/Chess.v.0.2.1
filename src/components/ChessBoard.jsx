@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
-import { MOVE } from '../pages/GamePage.jsx';
+import React, { useEffect, useState } from 'react'
+import { GAME_OVER, MESSAGE, MOVE } from '../pages/GamePage.jsx';
 import { toast } from "react-toastify";
 
 function ChessBoard({chess , board, socket, setBoard, disabled ,showCharacters}) {
-    console.log(board );
     const [from , setFrom] = useState(null);
+    useEffect( () =>{
+        if(chess.inCheck()){
+            socket.send(JSON.stringify({
+                type: MESSAGE,
+                message : "Check Check "
+            }));
+        };
+        
+    }, [board, chess]);
     
     return (
         <div className='text-white-200 '>
@@ -12,6 +20,7 @@ function ChessBoard({chess , board, socket, setBoard, disabled ,showCharacters})
                 return <div key={i} className='flex'>
                     {row.map( (square, j) => {
                         const squareRepresent = String.fromCharCode(97 + (j % 8)) + "" + (8 - i);
+                        
                         return (    
                             <div key={j} onClick={ ()=> {
                                 if(disabled){
@@ -34,13 +43,16 @@ function ChessBoard({chess , board, socket, setBoard, disabled ,showCharacters})
                                         to : squareRepresent 
                                     });
                                     setBoard(chess.board());
-                                    console.log({from , to : squareRepresent});
+                                    socket.send(JSON.stringify({
+                                        type : MESSAGE,
+                                        message : from + " to " + squareRepresent ,
+                                    }));
                                 }
-                            }} className={`w-16 h-16 ${(i+j)%2 === 0 ? "bg-green-500" : "bg-green-100" }` }>
+                            }} className={`w-16 h-16 ${(i+j)%2 === 0 ? "bg-green-500" : "bg-green-100" } ` }>
                                 <div className=" w-full flex justify-center h-full ">
-                                    <div className={`flex justify-center h-full flex-col  `}>
+                                    <div className={`flex justify-center h-full flex-col `}>
                                         {square ? <img 
-                                                        className={`w-13 ${from === squareRepresent ? "duration-300 animate-bounce" : "" }`} 
+                                                        className={`w-13 ${from === squareRepresent ? "duration-300 animate-bounce " : "" }`} 
                                                         src={`/${square?.color === "b" ? 
                                                         square?.type : `${square?.type?.toUpperCase()} copy`}.png`} 
                                                     /> 
