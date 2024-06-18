@@ -11,8 +11,8 @@ function App() {
       <div className="h-screen bg-slate-950">
         <BrowserRouter basename="/">
         <Routes>
-          <Route path="/" element={<LandingPage/>} />
-          <Route path="/game" element={<GamePage/>} />
+          <Route path="" element={<LandingPage/>} />
+          <Route path="game" element={<GamePage/>} />
         </Routes>
         </BrowserRouter>
       </div>
