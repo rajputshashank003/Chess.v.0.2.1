@@ -141,7 +141,7 @@ function GamePage() {
                                     />
                                 }
                             />
-                            {!chess.inCheck() && 
+                            {chess.inCheck() && 
                                 <span className="text-gray-400 animate-pulse duration-5 text-xl flex items-center">
                                     CHECKMATE
                                     <Alert severity='warning' sx={{bgcolor:"transparent", marginLeft:"-0.8rem"}}/>
