@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { GAME_OVER, MESSAGE, MOVE } from '../pages/GamePage.jsx';
 import { toast } from "react-toastify";
 
-function ChessBoard({chess , board, socket, setBoard, disabled ,showCharacters}) {
+function ChessBoard({started , chess , board, socket, setBoard, disabled ,showCharacters}) {
     const [from , setFrom] = useState(null);
     useEffect( () =>{
         if(chess.inCheck()){
             socket.send(JSON.stringify({
                 type: MESSAGE,
-                message : "Check Check "
+                message : "Check!!"
             }));
         };
         
@@ -23,7 +23,9 @@ function ChessBoard({chess , board, socket, setBoard, disabled ,showCharacters})
                         
                         return (    
                             <div key={j} onClick={ ()=> {
-                                if(disabled){
+                                if(!started){
+                                    // do nothing... eat 5 STAR
+                                } else if(disabled){
                                     toast.error("opponent's turn ");
                                 } else if(!from){
                                     setFrom(squareRepresent);

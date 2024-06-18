@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import MessagesBox from '../components/MessagesBox.jsx';
 import Iwin from '../components/Iwin.jsx';
 import OpponentWin from '../components/OpponentWin.jsx';
+import Alert from '@mui/material/Alert';
 
 export const INIT_GAME = 'init_game';
 export const MOVE = 'move';
@@ -122,14 +123,14 @@ function GamePage() {
                     {showWin && <Iwin />}
                 </div>
                 <div className={`fixed h-full w-full z-50 justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 ${showLose ? 'scale-100' : 'scale-0'}`}>
-                    {showLose && <OpponentWin/> }
+                    {showLose && <OpponentWin setShowLose={setShowLose}/> }
                 </div>
 
             <div className="pt-8 max-w-screen-lg w-full">
                 <div className="grid grid-cols-6 gap-4 w-full">
                     
                     <div className='col-span-4 flex flex-col justify-center'>
-                        <div className='text-white pl-2.5 '>
+                        <div className='text-white pl-2.5 inline-flex'>
                             <FormControlLabel
                                 control=
                                 {
@@ -140,8 +141,14 @@ function GamePage() {
                                     />
                                 }
                             />
+                            {!chess.inCheck() && 
+                                <span className="text-gray-400 animate-pulse duration-5 text-xl flex items-center">
+                                    CHECKMATE
+                                    <Alert severity='warning' sx={{bgcolor:"transparent", marginLeft:"-0.8rem"}}/>
+                                </span>
+                            }   
                         </div>
-                        <ChessBoard chess={chess} setBoard={setBoard} socket={socket} board={board} disabled={opponentsTurn} showCharacters={showCharacters} />
+                        <ChessBoard started={started} chess={chess} setBoard={setBoard} socket={socket} board={board} disabled={opponentsTurn} showCharacters={showCharacters} />
                     </div>
                     <div className='col-span-2 bg-slate-900 w-full flex justify-center'>
                         <div className='pt-8 flex flex-col items-center space-y-2 relative'>

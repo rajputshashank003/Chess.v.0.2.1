@@ -13,7 +13,7 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 
 ## Features
 
-- **Real-time Multiplayer:** Play against other players online in real-time.
+- **Real-time Multiplayer:** Play against other players online in real-time and Chat with each other.
 - **Responsive Design:** Fully responsive design that works on desktops, tablets, and mobile devices.
 
 ## Demo
