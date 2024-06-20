@@ -20,7 +20,7 @@ function UserName() {
     };
 
     return (
-        <div>
+        <div className=' w-56  '>
             <label htmlFor="player_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Player Name
             </label>

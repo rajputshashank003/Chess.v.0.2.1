@@ -283,7 +283,7 @@ function GamePage() {
                                             setFindingPlayer(true);
                                         }}
                                         h={"12"}
-                                        w={"36"}
+                                        w={"52"}
                                         disabled={findingPlayer}
                                     >
                                         Play
@@ -298,7 +298,8 @@ function GamePage() {
                                         w={"36"}
                                     >
                                         Streams
-                                    </Button>}
+                                    </Button>
+                                }
                                 </div>
                             )}
                             
