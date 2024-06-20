@@ -22,7 +22,11 @@ function LandingPage() {
                         </div>
                         <div className='mt-8 flex flex-col items-center space-y-4'>
                             <UserName />
-                            <Button onClick={() => navigate("/game")}>
+                            <Button 
+                                onClick={() => navigate("/game")}
+                                h='12'
+                                w='56'
+                            >
                                 Play Online
                             </Button>
                         </div>

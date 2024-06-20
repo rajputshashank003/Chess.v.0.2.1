@@ -7,14 +7,16 @@ function OpponentWin({setShowLose}) {
         navigate("/");
     }
     return (
-        <div className='inset-0 h-full flex items-center justify-center text-8xl bg-opacity-75 bg-black z-60'>
-            <div className='text-red-500 text-center flex flex-col' style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-                <i>Better Luck Next Time!</i>
+        <div className='inset-0 h-full flex items-center justify-center text-8xl bg-opacity-75 bg-white z-60'>
+            <div className='text-red-500 text-center flex flex-col' >
+                <div className='p-8 rounded-lg text-center'>
+                    <img src="./Loose.png" className='mx-auto w-full h-3/4 pt-10' alt="Winner" />
+                </div>
                 <span 
-                className='text-white text-4xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-400'
+                className='fixed top-10 right-10 text-black font-black text-4xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-400'
                 onClick= {handleNavigate}
                 >
-                    Restart
+                    X
                 </span>
             </div>
         </div>

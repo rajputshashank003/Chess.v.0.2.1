@@ -9,11 +9,22 @@ import MessagesBox from '../components/MessagesBox.jsx';
 import Iwin from '../components/Iwin.jsx';
 import OpponentWin from '../components/OpponentWin.jsx';
 import Alert from '@mui/material/Alert';
-
-export const INIT_GAME = 'init_game';
-export const MOVE = 'move';
-export const GAME_OVER = 'GAME_OVER';
-export const MESSAGE = 'message';
+import { INIT_GAME , 
+        MOVE ,
+        GAMES_COUNT , 
+        GAME_OVER , 
+        MESSAGE , 
+        SPECTARE, 
+        INIT_SPECTING, 
+        OPPONENT_DISCONNECT, 
+        STREAM_OVER, 
+        SPECTARE_CONNECTED, 
+        CHANNEL_EXIST, 
+        GAME_NOT_FOUND } 
+        from '../components/Messages.js';
+import StreamPage from '../components/StreamPage.jsx';
+import { toast } from 'react-toastify';
+import StreamOverPage from '../components/StreamOverPage.jsx';
 
 function GamePage() {
     const socket = UseSocket();
@@ -31,6 +42,12 @@ function GamePage() {
     const [winner, setWinner] = useState(null);
     const [showWin  , setShowWin] = useState(false);
     const [showLose , setShowLose] = useState(false);
+    const [gamesCount , setGamesCount] = useState(0);
+    const [streamPage , setStreamPage] = useState(false);
+    const [specting , setSpecting ] = useState(false);
+    const [streamOver , setStreamOver] = useState(false);
+    const [viewCount , setViewCount] = useState(0);
+    const [channelNumber , setChannelNumber] = useState(0);
 
     const [currUser , setCurrUser ] = useState(() => {
         const curr = localStorage.getItem("currUser");
@@ -44,12 +61,21 @@ function GamePage() {
         socket.onmessage = (event) => {
             const message = JSON.parse(event.data);
             switch(message.type){
+                case GAMES_COUNT :
+                    setGamesCount(message.games_count);
+                    break;
                 case INIT_GAME :
                     setBoard(chess.board());
                     setStarted(true);
                     setFindingPlayer(false);
                     setColor(message.payload.color);
                     console.log("game initialized ");
+                    break;
+                case INIT_SPECTING : 
+                    setStarted(true);
+                    setMoveCount(message.moveCount);
+                    setBoard(message.message);
+                    setChannelNumber(message.channelNumber);
                     break;
                 case MOVE : 
                     const move = message.payload;
@@ -61,9 +87,38 @@ function GamePage() {
                 case MESSAGE : 
                     setNewMessage(prev => [...prev , {message : message.message , owner : message.owner}]);
                     break;
+                case SPECTARE :
+                    setMoveCount(message.moveCount);
+                    chess.move(message.payload);
+                    setBoard(message.message);
+                    break;
                 case GAME_OVER : 
                     setGameOver(true);
                     setWinner(message.payload.winner === 'white' ? 'black' : 'white');
+                    break;
+                case OPPONENT_DISCONNECT :
+                    setShowWin(true);
+                    toast.success("Opponent Disconnected!");
+                    break;
+                case STREAM_OVER : 
+                    if(message.payload.winner === 'white' || message.payload.winner === 'black'){
+                        setWinner(message.payload.winner === 'white' ? 'black' : 'white');
+                    } else {
+                        setWinner(message.payload.winner);
+                    }
+                    setStreamOver(true);
+                    break;
+                case SPECTARE_CONNECTED :
+                    toast.success("Viewer Connected ");
+                    setViewCount((prev) => prev + 1);
+                    break;
+                case GAME_NOT_FOUND :
+                    toast.error("Game not found !");
+                    setSpecting(false);
+                    break;
+                case CHANNEL_EXIST : 
+                    toast.error("Channel Exist!");
+                    setFindingPlayer(false);
                     break;
             }
         }
@@ -82,7 +137,6 @@ function GamePage() {
     } , [socket, chess, board, turn, color]);
 
     useEffect( () => {
-        console.log(color , winner , GameOver);
         if(winner){
             if( color !== winner){
                 setShowWin(true);
@@ -116,21 +170,31 @@ function GamePage() {
         }));
         e.target.new_message.value = "";
     }
+
+    const handleChannelNumber = (e) => {
+        e.preventDefault();
+        setChannelNumber(e.target.value);
+    }
  
     return (
         <div className='flex justify-center'>
                 <div className={`fixed h-full w-full z-50 justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 ${showWin ? 'scale-100' : 'scale-0'}`}>
-                    {showWin && <Iwin />}
+                    {!specting && !showLose && showWin && <Iwin />}
                 </div>
                 <div className={`fixed h-full w-full z-50 justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 ${showLose ? 'scale-100' : 'scale-0'}`}>
-                    {showLose && <OpponentWin setShowLose={setShowLose}/> }
+                    {!specting && showLose && <OpponentWin setShowLose={setShowLose}/> }
                 </div>
-
+                <div className={`fixed h-full w-full z-50 justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 ${streamPage ? 'scale-100' : 'scale-0'}`}>
+                    {streamPage && <StreamPage channelNumber={channelNumber} setChannelNumber={setChannelNumber} setStreamPage={setStreamPage} setSpecting={setSpecting} gamesCount={gamesCount} socket={socket} />}
+                </div>
+                <div className={`fixed h-full w-full z-50 justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 ${streamOver ? 'scale-100' : 'scale-0'}`}>
+                    {specting && streamOver && <StreamOverPage winner={winner}/>}
+                </div>
             <div className="pt-8 max-w-screen-lg w-full">
                 <div className="grid grid-cols-6 gap-4 w-full">
                     
                     <div className='col-span-4 flex flex-col justify-center'>
-                        <div className='text-white pl-2.5 inline-flex'>
+                        <div className='text-white pl-1 inline-flex'>
                             <FormControlLabel
                                 control=
                                 {
@@ -141,14 +205,32 @@ function GamePage() {
                                     />
                                 }
                             />
+                            {channelNumber && channelNumber > 0 && 
+                                <span className="text-white duration-5 text-3xl flex items-center pr-2">
+                                    <b>{channelNumber}</b>
+                                </span>
+                            }
                             {chess.inCheck() && 
                                 <span className="text-gray-400 animate-pulse duration-5 text-xl flex items-center">
                                     CHECKMATE
                                     <Alert severity='warning' sx={{bgcolor:"transparent", marginLeft:"-0.8rem"}}/>
                                 </span>
                             }   
+                            {specting && 
+                                <img src="./streaming.png" className='h-10 w-10 animate-pulse mr-2' alt="" />
+                            }
                         </div>
-                        <ChessBoard started={started} chess={chess} setBoard={setBoard} socket={socket} board={board} disabled={opponentsTurn} showCharacters={showCharacters} />
+                        <ChessBoard 
+                            color={color} 
+                            started={started} 
+                            chess={chess} 
+                            setBoard={setBoard} 
+                            socket={socket} 
+                            board={board} 
+                            disabled={opponentsTurn} 
+                            showCharacters={showCharacters} 
+                            specting={specting}
+                        />
                     </div>
                     <div className='col-span-2 bg-slate-900 w-full flex justify-center'>
                         <div className='pt-8 flex flex-col items-center space-y-2 relative'>
@@ -173,23 +255,53 @@ function GamePage() {
                                     </span>
                                 )}
                             </span>
+                            {/* {viewers count} */}
+                            <span className='text-white text-lg'>
+                                {viewCount > 0 && <span>Viwers : <b>{viewCount}</b></span>}
+                            </span>
                             {/* {message box } */}
                              
-                            {started && <MessagesBox messages={messages} handleMessageSubmit={handleMessageSubmit}/> }
-
+                            {started && <MessagesBox messages={messages} specting={specting} handleMessageSubmit={handleMessageSubmit}/> }
+                            {/* {channel input } */}
+                            {!started && <input
+                                type="Number"
+                                id="channelNumber"
+                                name="channelNumber"
+                                className="bg-gray-50 border h-10 w-24 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder={"1 to 9999"}
+                                min={1}
+                                max={9999}
+                                value={channelNumber}
+                                onChange={handleChannelNumber}
+                            /> }
                             {/* Button to start the game */}
                             {!started && !findingPlayer && (
-                                <Button
-                                    onClick={() => {
-                                        socket.send(JSON.stringify({ type: INIT_GAME }));
-                                        setFindingPlayer(true);
-                                    }}
-                                    disabled={findingPlayer}
-                                    className='mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring focus:ring-blue-300 disabled:bg-gray-600'
-                                >
-                                    Play
-                                </Button>
+                                <div className='flex flex-row space-x-2'>
+                                    <Button
+                                        onClick={() => {
+                                            socket.send(JSON.stringify({ type: INIT_GAME , channel : channelNumber }));
+                                            setFindingPlayer(true);
+                                        }}
+                                        h={"12"}
+                                        w={"36"}
+                                        disabled={findingPlayer}
+                                    >
+                                        Play
+                                    </Button>
+                                {/* {stream button } */}
+                                {gamesCount > 0 && 
+                                    <Button
+                                        onClick={() => {
+                                            setStreamPage(true);
+                                        }}
+                                        h={"12"}
+                                        w={"36"}
+                                    >
+                                        Streams
+                                    </Button>}
+                                </div>
                             )}
+                            
                             {/* Finding player message */}
                             {findingPlayer && (
                                 <span className='text-white text-lg font-mono '>

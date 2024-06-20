@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-function MessagesBox({messages, handleMessageSubmit}) {
+function MessagesBox({messages, handleMessageSubmit , specting }) {
     const scrollableRef = useRef(null);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function MessagesBox({messages, handleMessageSubmit}) {
                     ))}
                 </ul>
             }
-            <form onSubmit={handleMessageSubmit} className='flex inline space-x-2 mb-2 ml-2'>
+            {!specting && <form onSubmit={handleMessageSubmit} className='flex inline space-x-2 mb-2 ml-2'>
                 <input
                     type="text"
                     id="new_message"
@@ -34,7 +34,7 @@ function MessagesBox({messages, handleMessageSubmit}) {
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                     </svg>
                 </button>
-            </form>
+            </form>}
         </div>
     )
 }

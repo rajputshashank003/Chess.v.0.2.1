@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { GAME_OVER, MESSAGE, MOVE } from '../pages/GamePage.jsx';
+import { GAME_OVER, MESSAGE, MOVE } from '../components/Messages.js';
 import { toast } from "react-toastify";
 
-function ChessBoard({started , chess , board, socket, setBoard, disabled ,showCharacters}) {
+function ChessBoard({color , started , chess , board, socket, setBoard, disabled ,showCharacters, specting}) {
     const [from , setFrom] = useState(null);
     useEffect( () =>{
         if(chess.inCheck()){
@@ -13,17 +13,29 @@ function ChessBoard({started , chess , board, socket, setBoard, disabled ,showCh
         };
         
     }, [board, chess]);
+
+    const getReversedBoard = (originalBoard) => {
+        return originalBoard.map(row => [...row].reverse()).reverse();
+    };
+
+    const renderedBoard = color === 'black' ? getReversedBoard(board) : board;
+
+    const getSquareRepresentation = (i, j, reverse) => {
+        const charRow = String.fromCharCode(97 + (j % 8));
+        const intCol = 8 - i; 
+        return reverse ? `${String.fromCharCode(97 + (7 - j % 8))}${1 + i}` : `${charRow}${intCol}`;
+    };  
     
     return (
         <div className='text-white-200 '>
-            {board.map( (row , i) => {
+            {renderedBoard.map( (row , i) => {
                 return <div key={i} className='flex'>
                     {row.map( (square, j) => {
-                        const squareRepresent = String.fromCharCode(97 + (j % 8)) + "" + (8 - i);
+                        const squareRepresent = getSquareRepresentation(i, j, color === 'black');
                         
                         return (    
                             <div key={j} onClick={ ()=> {
-                                if(!started){
+                                if(!started || specting ){
                                     // do nothing... eat 5 STAR
                                 } else if(disabled){
                                     toast.error("opponent's turn ");
@@ -54,7 +66,7 @@ function ChessBoard({started , chess , board, socket, setBoard, disabled ,showCh
                                 <div className=" w-full flex justify-center h-full ">
                                     <div className={`flex justify-center h-full flex-col `}>
                                         {square ? <img 
-                                                        className={`w-13 ${from === squareRepresent ? "duration-300 animate-bounce " : "" }`} 
+                                                        className={`w-13 ${started && !specting && 'cursor-pointer hover:scale-110 '} ${from === squareRepresent ? "duration-300 animate-bounce " : "" }`} 
                                                         src={`/${square?.color === "b" ? 
                                                         square?.type : `${square?.type?.toUpperCase()} copy`}.png`} 
                                                     /> 
