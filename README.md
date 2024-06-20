@@ -5,6 +5,7 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 ## Table of Contents
 
 - [Features](#features)
+- [Backend](#backend)
 - [Demo](#demo)
 - [Installation](#installation)
 - [Contributing](#contributing)
@@ -13,14 +14,23 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 
 ## Features
 
-- **Real-time Multiplayer:** Play against other players online in real-time and Chat with each other.
+- **Real-time Multiplayer:** Play against other players online in real-time.
+- **Real-time Chat:** Now you can chat with the opponent.
+- **Real-time Streaming:** Your game is Streaming continuously on the web app.
+- **Custom Game Rooms:** Create custom game room with channelNumber and play with your friend.
+- **Custom Game Stream:** Choose custom game to watch with channelNumber .
 - **Responsive Design:** Fully responsive design that works on desktops, tablets, and mobile devices.
+
+##Backend
+
+[Backend Link](https://github.com/rajputshashank003/chess-v2-api)
 
 ## Demo
 
 [Live Demo](https://chessv.netlify.app/)
 
 ![Home Page](image.png)
+![Home Page](image-1.png)
 
 ## Installation
 
