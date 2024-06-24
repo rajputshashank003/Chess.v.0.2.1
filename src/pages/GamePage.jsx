@@ -3,9 +3,6 @@ import ChessBoard from '../components/ChessBoard.jsx';
 import Button from '../components/Button.jsx';
 import UseSocket from '../hooks/useSocket.jsx';
 import { Chess } from "chess.js";
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import MessagesBox from '../components/MessagesBox.jsx';
 import Alert from '@mui/material/Alert';
 import { INIT_GAME , 
         MOVE ,
