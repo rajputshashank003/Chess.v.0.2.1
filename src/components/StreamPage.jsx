@@ -59,7 +59,7 @@ function StreamPage({setStreamPage, gamesCount, socket, setSpecting , setChannel
                 )}
             </div>
             <div 
-                className='fixed top-10 right-10 text-white text-4xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-400'
+                className='max-sm:top-2 max-sm:text-2xl fixed top-10 right-10 text-white text-4xl cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-400'
                 onClick={() => setStreamPage(false)}
             >
                 X

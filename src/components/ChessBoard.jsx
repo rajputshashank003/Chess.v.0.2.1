@@ -27,9 +27,9 @@ function ChessBoard({color , started , chess , board, socket, setBoard, disabled
     };  
     
     return (
-        <div className='text-white-200 '>
+        <div className='text-white-200 w-fit h-fit rounded-sm overflow-hidden'>
             {renderedBoard.map( (row , i) => {
-                return <div key={i} className='flex'>
+                return <div key={i} className='flex '>
                     {row.map( (square, j) => {
                         const squareRepresent = getSquareRepresentation(i, j, color === 'black');
                         
@@ -62,7 +62,7 @@ function ChessBoard({color , started , chess , board, socket, setBoard, disabled
                                         message : from + " to " + squareRepresent ,
                                     }));
                                 }
-                            }} className={`w-16 h-16 ${(i+j)%2 === 0 ? "bg-green-500" : "bg-green-100" } ` }>
+                            }} className={`w-16 h-16 max-sm:w-10 max-sm:h-10 ${(i+j)%2 === 0 ? "bg-green-500" : "bg-green-100" } ` }>
                                 <div className=" w-full flex justify-center h-full ">
                                     <div className={`flex justify-center h-full flex-col `}>
                                         {square ? <img 

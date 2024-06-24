@@ -10,9 +10,9 @@ function MessagesBox({messages, handleMessageSubmit , specting }) {
       }, [messages]);
 
     return (
-        <div className="flex flex-col absolute bottom-0 ">
+        <div className="flex flex-col absolute bottom-0">
             {messages.length > 0 && 
-                <ul ref={scrollableRef} className='m-2 text-white border border-white rounded p-2 relative h-fit max-h-32 overflow-auto no-scrollbar w-72'>
+                <ul ref={scrollableRef} className='m-2 text-white border border-white rounded p-2 relative h-fit max-h-32 overflow-auto no-scrollbar w-72 max-sm:w-60 max-sm:max-h-28'>
                     {messages.map((message, index) => (
                         <li key={index} className={`flex ${message.owner === 'sender' ? 'justify-end text-sky-300' : 'justify-start text-sky-100'} p-0.5`}>
                             {message.message}

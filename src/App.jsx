@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <div className="h-screen bg-slate-950">
+      <div className="h-full max-sm:h-full bg-slate-950 ">
         <BrowserRouter >
           <Routes>
             <Route path="/" element={<LandingPage/>} />
