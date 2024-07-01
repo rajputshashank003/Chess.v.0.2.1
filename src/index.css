@@ -16,4 +16,6 @@
 
 :root {
     background-color: rgb(2 6 23);
+    overflow: scroll;
+    scrollbar-width: none;
 }

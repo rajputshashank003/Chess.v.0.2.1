@@ -179,8 +179,17 @@ function GamePage() {
         <div className='text-white flex flex-col'>
             <span className='flex text-gray-600 text-sm'><span className='text-gray-400 font-black'>{onlineUsers}</span> Online</span>
             <div className='flex justify-center items-center text-green-600 font-black text-3xl'>ChessV</div>
+            {/* <div className='flex justify-center items-center text-green-600 font-black text-3xl'>
+                <button onClick={ () => {
+                    socket.send(JSON.stringify({
+                        type : "recording_started",
+                    }))
+                } }>
+                    start Record
+                </button>
+            </div> */}
         </div>
-        <div className='flex justify-center max-sm:ml-2 ml-4 mr-4'>
+        <div className='flex justify-center max-sm:ml-2 ml-4 mr-4 '>
             <OverlayGamePage
                 specting={specting}
                 showLose={showLose}
@@ -198,24 +207,21 @@ function GamePage() {
                 started={started}
             />
             <div className="pt-8 max-w-screen-lg w-full">
-                <div className="grid grid-cols-6 max-sm:grid-cols-2 gap-4 w-full">
-                    <div className='col-span-4 flex flex-col  justify-center'>
-                        <div className='text-white pl-1 inline-flex'>
+                <div className="grid grid-cols-6 max-sm:flex max-sm:flex-col max-sm:items-center gap-4 w-full">
+                    <div className='col-span-4 flex flex-col justify-center items-center '>
+                        <div className={`text-white pl-1 inline-flex flex-start items-center h-10 bg-slate-900 mb-1 max-sm:w-222 w-111 rounded-sm `}>
                             <CoordinateSwitch showCharacters={showCharacters} handleShowCharacter={handleShowCharacter}/> 
                             {channelNumber > 0 && 
-                                <span className="text-white duration-5 text-3xl flex items-center pr-2">
-                                    <b>{channelNumber}</b>
+                                <span className="text-gray-400 duration-5 text-2xl items-center pr-2">
+                                    <span className='text-gray-500 text-xl'>Channel &nbsp;</span>{channelNumber}
                                 </span>
                             }
                             {chess.inCheck() && 
-                                <span className="text-gray-400 animate-pulse duration-5 text-xl flex items-center">
-                                    CHECKMATE
+                                <span className="animate-pulse duration-5 text-xl flex items-center">
                                     <Alert severity='warning' sx={{bgcolor:"transparent", marginLeft:"-0.8rem"}}/>
                                 </span>
-                            }   
-                            {specting && 
-                                <img src="./streaming.png" className='h-10 w-10 animate-pulse mr-2' alt="" />
                             }
+
                         </div>
                         <ChessBoard 
                             color={color} 
@@ -228,13 +234,19 @@ function GamePage() {
                             showCharacters={showCharacters} 
                             specting={specting}
                         />
+                        <div className={`text-white pl-1 h-10 inline-flex justify-center items-center bg-slate-900 mt-1 max-sm:w-222 w-111 rounded-sm `}>
+                            {viewCount > 0 && 
+                                <span className='text-gray-400 mr-2 text-lg'>
+                                    <span className='text-gray-200 text-xl'>{viewCount}</span>&nbsp; viewer
+                                </span>
+                            }
+                        </div>
                     </div>
                     <GameDetails
                         currUser={currUser} 
                         color={color} 
                         moveCount={moveCount} 
                         opponentsTurn={opponentsTurn} 
-                        viewCount={viewCount} 
                         messages={messages} 
                         specting={specting}
                         handleMessageSubmit={handleMessageSubmit} 

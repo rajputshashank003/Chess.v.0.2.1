@@ -22,7 +22,7 @@ function StreamPage({setStreamPage, gamesCount, socket, setSpecting , setChannel
     }
 
     return (
-        <div className='inset-0 flex h-full text-lg items-center justify-center bg-opacity-85 bg-black z-60'>
+        <div className='inset-0 flex h-full text-lg items-center justify-center bg-opacity-85 backdrop-blur-md z-60'>
             <span className='text-5xl text-white absolute top-10 '>Game Rooms</span>
             <div className='absolute top-24 flex space-x-4'>
                 <input
