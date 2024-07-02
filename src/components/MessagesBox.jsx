@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-function MessagesBox({messages, handleMessageSubmit , specting }) {
+function MessagesBox({messages, handleMessageSubmit , specting , handleMessageSubmitToAll , started}) {
     const scrollableRef = useRef(null);
 
     useEffect(() => {
@@ -10,9 +10,9 @@ function MessagesBox({messages, handleMessageSubmit , specting }) {
       }, [messages]);
 
     return (
-        <div className="flex flex-col absolute bottom-0">
+        <div className="flex flex-col absolute bottom-0 w-72">
             {messages.length > 0 && 
-                <ul ref={scrollableRef} className='m-2 text-white border border-white rounded p-2 relative h-fit max-h-32 overflow-auto no-scrollbar w-72 max-sm:w-60 max-sm:max-h-28'>
+                <ul ref={scrollableRef} className='m-2 text-white border border-white rounded p-2 relative h-fit max-h-36 overflow-auto no-scrollbar w-72 max-sm:w-60 max-sm:max-h-28'>
                     {messages.map((message, index) => (
                         <li key={index} className={`flex ${message.owner === 'sender' ? 'justify-end text-sky-300' : 'justify-start text-sky-100'} p-0.5`}>
                             {message.message}
@@ -20,12 +20,12 @@ function MessagesBox({messages, handleMessageSubmit , specting }) {
                     ))}
                 </ul>
             }
-            {!specting && <form onSubmit={handleMessageSubmit} className='flex inline space-x-2 mb-2 ml-2'>
+            {!specting && <form onSubmit={started ? handleMessageSubmit : handleMessageSubmitToAll} className='flex inline space-x-2 mb-2 ml-2'>
                 <input
                     type="text"
                     id="new_message"
                     name="new_message"
-                    className="bg-gray-50 border h-18 w-59 pr-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border h-18 w-60 pr-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={"New Message"}
                     required
                 />

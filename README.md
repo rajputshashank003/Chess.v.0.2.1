@@ -31,6 +31,7 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 
 ![Home Page](image.png)
 ![Home Page](image-1.png)
+![Mobile View](image-2.png)
 
 ## Installation
 

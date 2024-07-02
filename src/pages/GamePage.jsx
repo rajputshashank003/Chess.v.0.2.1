@@ -15,7 +15,8 @@ import { INIT_GAME ,
         STREAM_OVER, 
         SPECTARE_CONNECTED, 
         CHANNEL_EXIST, 
-        GAME_NOT_FOUND } 
+        GAME_NOT_FOUND, 
+        MESSAGEALL} 
         from '../components/Messages.js';
 import { toast } from 'react-toastify';
 import OverlayGamePage from '../components/OverlayGamePage.jsx';
@@ -67,6 +68,7 @@ function GamePage() {
                     setStarted(true);
                     setFindingPlayer(false);
                     setColor(message.payload.color);
+                    setNewMessage([]);
                     console.log("game initialized ");
                     break;
                 case INIT_SPECTING : 
@@ -74,6 +76,7 @@ function GamePage() {
                     setMoveCount(message.moveCount);
                     setBoard(message.message);
                     setChannelNumber(message.channelNumber);
+                    setNewMessage([]);
                     break;
                 case MOVE : 
                     const move = message.payload;
@@ -118,9 +121,14 @@ function GamePage() {
                     toast.error("Channel Exist!");
                     setFindingPlayer(false);
                     break;
+                case MESSAGEALL :
+                    if(!started && !specting ){
+                        setNewMessage(prev => [...prev , {message : message.message , owner : message.owner}]);
+                    }
+                    break;
             }
         }
-    },[socket]);
+    },[socket, started , specting]);
 
     useEffect ( () => {
         setTurn(chess.turn());

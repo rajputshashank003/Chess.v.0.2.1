@@ -1,12 +1,21 @@
 import React from 'react'
 import MessagesBox from './MessagesBox';
 import Button from './Button';
-import { INIT_GAME } from './Messages';
+import { INIT_GAME, MESSAGEALL } from './Messages';
 function GameDetails({currUser , color , moveCount , opponentsTurn, messages, specting , 
                         handleMessageSubmit , started , findingPlayer , socket , channelNumber,gamesCount , 
                         setStreamPage ,setFindingPlayer ,handleChannelNumber
                     }) 
     {
+    const handleMessageSubmitToAll = (e) => {
+        e.preventDefault();
+        socket.send(JSON.stringify({
+            type : MESSAGEALL ,
+            message : e.target.new_message.value,
+        }));
+        e.target.new_message.value = "";
+    }
+
     return (
         <div className=' col-span-2 bg-slate-900 w-full max-sm:w-222 max-sm:h-96 max-sm:mb-4 flex justify-center rounded-md overflow-hidden'>
         <div className='pt-8 flex flex-col items-center space-y-2 relative'>
@@ -35,7 +44,8 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
             
             {/* {message box } */}
              
-            {started && <MessagesBox messages={messages} specting={specting} handleMessageSubmit={handleMessageSubmit}/> }
+            {<MessagesBox messages={messages} specting={specting} started={started} handleMessageSubmitToAll={handleMessageSubmitToAll} handleMessageSubmit={handleMessageSubmit} /> }
+
             {/* {channel input } */}
             {!started &&
                 <div className='flex flex-start flex-col'>
