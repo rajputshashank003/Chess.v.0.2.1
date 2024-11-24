@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MessagesBox from './MessagesBox';
 import Button from './Button';
 import { INIT_GAME, MESSAGEALL } from './Messages';
+import MicrophoneButton from "./MicrophoneButton.jsx";
+
+import { useCopyToClipboard } from "usehooks-ts";
+
 function GameDetails({currUser , color , moveCount , opponentsTurn, messages, specting , 
                         handleMessageSubmit , started , findingPlayer , socket , channelNumber,gamesCount , 
-                        setStreamPage ,setFindingPlayer ,handleChannelNumber
+                        setStreamPage ,setFindingPlayer ,handleChannelNumber, audioElement , callStarted ,
+                        handleStartCall, endCall,
                     }) 
     {
+    
+    const [value, copy] = useCopyToClipboard();
+
     const handleMessageSubmitToAll = (e) => {
         e.preventDefault();
         socket.send(JSON.stringify({
@@ -15,7 +23,37 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
         }));
         e.target.new_message.value = "";
     }
-
+    const [callMinutes , setCallMinutes] = useState(0);
+    const [callSeconds , setCallSeconds] = useState(0);
+    useEffect(() => {
+        let interval;
+        if (callStarted) {
+            interval = setInterval(() => {
+                setCallSeconds((prevSeconds) => {
+                    if (prevSeconds === 59) {
+                        setCallMinutes((prevMinutes) => prevMinutes + 1);
+                        return 0;
+                    } else {
+                        return prevSeconds + 1;
+                    }
+                });
+            }, 1000);
+        } else {
+            clearInterval(interval);
+            setCallMinutes(0);
+            setCallSeconds(0);
+        }
+        return () => clearInterval(interval);
+    }, [callStarted]);
+    
+    const handleMicrophone = () => {
+        if(callStarted){
+            endCall();
+        } else {
+            handleStartCall();
+        }
+    }
+    
     return (
         <div className=' col-span-2 bg-slate-900 w-full max-sm:w-222 max-sm:h-96 max-sm:mb-4 flex justify-center rounded-md overflow-hidden'>
         <div className='pt-8 flex flex-col items-center space-y-2 relative'>
@@ -102,6 +140,21 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                     do min...
                 </span>
             )}
+            {/* show audio tab */}
+            {
+                started && !specting &&
+                <div className="flex justify-center items-center gap-4">
+                    {callStarted && 
+                        <span className="text-xl text-gray-200 px-1 pr-0 py-2 rounded">
+                            {callMinutes} : {callSeconds}
+                        </span>
+                    }
+                    <span onClick={() => handleMicrophone()} className="p-2 px-0 rounded">
+                        <MicrophoneButton muted={!callStarted} />
+                    </span>
+                </div>
+            }
+            <audio className='bg-gray-700 hidden' ref={audioElement} controls={true} autoPlay={true}></audio>
         </div>
     </div> 
     )

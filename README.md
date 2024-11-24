@@ -16,6 +16,7 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 
 - **Real-time Multiplayer:** Play against other players online in real-time.
 - **Real-time Chat:** Now you can chat with the opponent.
+- **Audio Call:** Connect with your opponent via in-game audio calls feature.
 - **Real-time Streaming:** Your game is Streaming continuously on the web app.
 - **Custom Game Rooms:** Create custom game room with channelNumber and play with your friend.
 - **Custom Game Stream:** Choose custom game to watch with channelNumber .
@@ -79,11 +80,12 @@ Create a new Pull Request
 Front-end:
     React.js
     Socket.io Client
-
+    
 Back-end:
     Node.js
     Socket.io Server
-
+    WebRTC (used for audio calling)
+    
 Others:
     React Router
     Chess.js (chess logic library)
