@@ -3,18 +3,19 @@ import MessagesBox from './MessagesBox';
 import Button from './Button';
 import { INIT_GAME, MESSAGEALL } from './Messages';
 import MicrophoneButton from "./MicrophoneButton.jsx";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 import { useCopyToClipboard } from "usehooks-ts";
+import VideoCallButton from './VideoCallButton.jsx';
+import EndCall from './EndCall.jsx';
 
 function GameDetails({currUser , color , moveCount , opponentsTurn, messages, specting , 
                         handleMessageSubmit , started , findingPlayer , socket , channelNumber,gamesCount , 
                         setStreamPage ,setFindingPlayer ,handleChannelNumber, audioElement , callStarted ,
-                        handleStartCall, endCall,
+                        handleStartCall, endCall, wantsVideoAudio, setWantsVideoAudio
                     }) 
     {
     
-    const [value, copy] = useCopyToClipboard();
-
     const handleMessageSubmitToAll = (e) => {
         e.preventDefault();
         socket.send(JSON.stringify({
@@ -25,6 +26,8 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
     }
     const [callMinutes , setCallMinutes] = useState(0);
     const [callSeconds , setCallSeconds] = useState(0);
+    const [startCallSent , setStartCallSent] = useState(false);
+
     useEffect(() => {
         let interval;
         if (callStarted) {
@@ -43,6 +46,9 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
             setCallMinutes(0);
             setCallSeconds(0);
         }
+        if(callStarted){
+            setStartCallSent(false)
+        }
         return () => clearInterval(interval);
     }, [callStarted]);
     
@@ -50,7 +56,17 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
         if(callStarted){
             endCall();
         } else {
+            setStartCallSent(true);
             handleStartCall();
+        }
+    }
+    const handleVideoAudio = async () => {
+        if(callStarted){
+            endCall();
+        } else {
+            setStartCallSent(true);
+            setWantsVideoAudio((prev) => !prev);
+            await handleStartCall();
         }
     }
     
@@ -144,14 +160,40 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
             {
                 started && !specting &&
                 <div className="flex justify-center items-center gap-4">
-                    {callStarted && 
+                    {
+                        callStarted && 
                         <span className="text-xl text-gray-200 px-1 pr-0 py-2 rounded">
                             {callMinutes} : {callSeconds}
                         </span>
                     }
-                    <span onClick={() => handleMicrophone()} className="p-2 px-0 rounded">
-                        <MicrophoneButton muted={!callStarted} />
-                    </span>
+                    {   
+                        !callStarted && !startCallSent &&
+                        <span onClick={() => handleMicrophone()} className="p-2 px-0 rounded">
+                            <MicrophoneButton muted={!callStarted} />
+                        </span>
+                    }
+                    {   
+                        !callStarted && !startCallSent &&
+                        <span onClick={() => handleVideoAudio()} className="p-2 px-0 rounded">
+                            <VideoCallButton wantsVideoAudio={wantsVideoAudio} />
+                        </span>
+                    }
+                    {
+                        startCallSent && !callStarted &&           
+                        <div className='m-0 p-0 h-28'>              
+                            <DotLottieReact
+                                src="../../public/CallingAnimation.lottie"
+                                loop
+                                autoplay
+                            />
+                        </div>
+                    }
+                    {
+                        callStarted && 
+                        <span onClick={() => handleMicrophone()} className="p-2 px-0 rounded">
+                            <EndCall />
+                        </span>
+                    }
                 </div>
             }
             <audio className='bg-gray-700 hidden' ref={audioElement} controls={true} autoPlay={true}></audio>

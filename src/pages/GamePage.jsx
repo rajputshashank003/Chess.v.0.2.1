@@ -22,6 +22,7 @@ import OverlayGamePage from '../components/OverlayGamePage.jsx';
 import CoordinateSwitch from '../components/CoordinateSwitch.jsx';
 import GameDetails from '../components/GameDetails.jsx';
 import freeice from "freeice";
+import VideoCallElement from '../components/VideoCallElement.jsx';
 
 function GamePage() {
     const socket = UseSocket();
@@ -53,26 +54,36 @@ function GamePage() {
     });
     
     const localMediaStream = useRef(null) ;
+    const videoElement = useRef(null);
     const audioElement = useRef(null);
     const peerConnection = useRef(null) ;
     const [callStarted, setCallStarted] = useState(false);
+    const [wantsVideoAudio , setWantsVideoAudio] = useState(false);
 
     const startAudioCapture = async () => {
         try {
             localMediaStream.current = await navigator.mediaDevices.getUserMedia({
                 audio: true,
+                video : wantsVideoAudio
             });
         } catch (error) {
             console.error("Error capturing audio:", error);
         }
     };
+    useEffect( () => {
+        const startFunc = async () => {
+            if(!socket) return ;
+            await startAudioCapture();
+            setupPeerConnection();
+        }
+        startFunc();
+    }, [wantsVideoAudio]);
 
     const setupPeerConnection = () => {
         if (!localMediaStream.current) {
             console.error("Local media stream is not initialized");
             return;
         }
-
         peerConnection.current = new RTCPeerConnection({
             iceServers: freeice(),
         });
@@ -99,12 +110,19 @@ function GamePage() {
             } else {
                 console.error("Audio element is not initialized");
             }
+            if (videoElement.current) {
+                videoElement.current.srcObject = event.streams[0];
+                videoElement.current.play();
+            } else {
+                console.error("Video element is not initialized");
+            }
         };
     };
 
     const startCall = async () => {
-        await startAudioCapture();
-
+        if(!wantsVideoAudio){
+            setupPeerConnection();
+        }
         const offer = await peerConnection.current.createOffer();
         await peerConnection.current.setLocalDescription(offer);
 
@@ -124,8 +142,7 @@ function GamePage() {
                 type : "end_call"
             })
         )
-        await startAudioCapture();
-        setupPeerConnection();
+        setWantsVideoAudio(false);
     };
 
     useEffect (() => {
@@ -216,7 +233,6 @@ function GamePage() {
                     }
                     break;
                 case "offer":
-                    setupPeerConnection();
                     peerConnection.current.setRemoteDescription(
                         new RTCSessionDescription(message.offer)
                     ).then(() => peerConnection.current.createAnswer())
@@ -247,13 +263,16 @@ function GamePage() {
                     break;
                 case "call_started" :
                     setCallStarted(true); 
-                    await startCall();
+                    setTimeout(async () => {
+                        await startCall();
+                    }, 1500);
                     break;
                 case "start_call_start_timer" :
                     setCallStarted(true);
                     break;
                 case "end_call" :
                     setCallStarted(false);
+                    setWantsVideoAudio(false);
                     toast.success("call ended");
                     break;
                 default:
@@ -314,7 +333,7 @@ function GamePage() {
         e.preventDefault();
         setChannelNumber(e.target.value);
     }
-    const handleStartCall = () => {
+    const handleStartCall = async () => {
         socket.send(
             JSON.stringify({
                 type : "start_call_sender"
@@ -325,7 +344,11 @@ function GamePage() {
 
     return (
         <>
-        <div className='text-white flex flex-col'>           
+        <div className='text-white flex flex-col'>
+            {
+                wantsVideoAudio && callStarted &&
+                <VideoCallElement videoElement={videoElement}/>
+            }
             <span className='flex text-gray-600 text-sm'><span className='text-gray-400 font-black'>{onlineUsers}</span> Online</span>
             <div className='flex justify-center items-center text-green-600 font-black text-3xl'>ChessV</div>
             {/* <div className='flex justify-center items-center text-green-600 font-black text-3xl'>
@@ -411,6 +434,8 @@ function GamePage() {
                         callStarted={callStarted}
                         handleStartCall={handleStartCall}
                         endCall={endCall}
+                        setWantsVideoAudio={setWantsVideoAudio}
+                        wantsVideoAudio={wantsVideoAudio}
                     />
                 </div>
             </div>
