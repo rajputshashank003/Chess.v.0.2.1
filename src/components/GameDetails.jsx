@@ -178,7 +178,7 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                         </span>
                     }
                     {
-                        // startCallSent && !callStarted &&           
+                        startCallSent && !callStarted &&           
                         <div className='m-0 p-0 h-28'>              
                             <DotLottieReact
                                 src="/CallingAnimation.lottie"
