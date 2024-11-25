@@ -5,7 +5,6 @@ import { INIT_GAME, MESSAGEALL } from './Messages';
 import MicrophoneButton from "./MicrophoneButton.jsx";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-import { useCopyToClipboard } from "usehooks-ts";
 import VideoCallButton from './VideoCallButton.jsx';
 import EndCall from './EndCall.jsx';
 
@@ -179,10 +178,10 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                         </span>
                     }
                     {
-                        startCallSent && !callStarted &&           
+                        // startCallSent && !callStarted &&           
                         <div className='m-0 p-0 h-28'>              
                             <DotLottieReact
-                                src="https://lottie.host/embed/3030339b-6327-4ef9-8227-34f0f1f940e8/b5SJFwNDRb.lottie"
+                                src="/CallingAnimation.lottie"
                                 loop
                                 autoplay
                             />
