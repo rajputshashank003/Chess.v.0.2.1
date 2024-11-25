@@ -182,7 +182,7 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                         startCallSent && !callStarted &&           
                         <div className='m-0 p-0 h-28'>              
                             <DotLottieReact
-                                src="../../public/CallingAnimation.lottie"
+                                src="https://lottie.host/embed/3030339b-6327-4ef9-8227-34f0f1f940e8/b5SJFwNDRb.lottie"
                                 loop
                                 autoplay
                             />
