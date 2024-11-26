@@ -9,7 +9,7 @@ function LandingPage() {
 
     return (
         <div className='flex justify-center'>
-            <div className="pt-2 max-w-screen-md">
+            <div className="p-2 m-8 max-w-screen-md">
                 <ChessTitle/>
                 <div className="grid pt-4 grid-cols-1 gap-4 md:grid-cols-2">
                     <div className='flex justify-center'>
@@ -19,7 +19,7 @@ function LandingPage() {
                     <div className='pt-16'>
                         <div className="flex justify-center">
                             <h1 className="font-bold text-4xl text-white"> 
-                                Play Chess Online on #3 Site!
+                                Play Chess Online
                             </h1>
                         </div>
                         <div className='mt-8 flex flex-col items-center space-y-4'>
