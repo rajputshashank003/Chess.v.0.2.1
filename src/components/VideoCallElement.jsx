@@ -10,11 +10,11 @@ function VideoCallElement({videoElement}) {
         width: 300,
         height: 190,
       }}
-      minWidth={300} 
-      minHeight={150} 
+      minWidth={150} 
+      minHeight={100} 
       bounds="window" 
       style={{
-        border: "1px solid #000",
+        border: "1px solid white",
         borderRadius: "8px",
         overflow: "hidden", 
         zIndex: 9999,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { GAME_OVER, MESSAGE, MOVE } from '../components/Messages.js';
 import { toast } from "react-toastify";
 
-function ChessBoard({color , started , chess , board, socket, setBoard, disabled ,showCharacters, specting}) {
+function ChessBoard({color , started , chess , board, socket, setBoard, disabled ,showCharacters, specting,turn}) {
     const [from , setFrom] = useState(null);
     useEffect( () =>{
         if(chess.inCheck()){
@@ -32,10 +32,9 @@ function ChessBoard({color , started , chess , board, socket, setBoard, disabled
                 return <div key={i} className='flex '>
                     {row.map( (square, j) => {
                         const squareRepresent = getSquareRepresentation(i, j, color === 'black');
-                        
                         return (    
                             <div key={j} onClick={ ()=> {
-                                if(!started || specting ){
+                                if(!started || specting || (square && square.color !== color[0])){
                                     // do nothing... eat 5 STAR
                                 } else if(disabled){
                                     toast.error("opponent's turn ");
@@ -66,7 +65,7 @@ function ChessBoard({color , started , chess , board, socket, setBoard, disabled
                                 <div className=" w-full flex justify-center h-full ">
                                     <div className={`flex justify-center h-full flex-col `}>
                                         {square ? <img 
-                                                        className={`w-13 ${started && !specting && 'cursor-pointer hover:scale-110 '} ${from === squareRepresent ? "duration-300 animate-bounce " : "" }`} 
+                                                        className={`w-13 ${started && !specting && square && square.color === color[0] && turn === color[0] && 'cursor-pointer hover:scale-125 duration-200'} ${from === squareRepresent ? "duration-300 animate-bounce " : "" }`} 
                                                         src={`/${square?.color === "b" ? 
                                                         square?.type : `${square?.type?.toUpperCase()} copy`}.png`} 
                                                     /> 

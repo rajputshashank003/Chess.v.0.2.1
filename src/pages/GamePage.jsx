@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ChessBoard from '../components/ChessBoard.jsx';
 import UseSocket from '../hooks/useSocket.jsx';
 import { Chess } from "chess.js";
-import Alert from '@mui/material/Alert';
 import { INIT_GAME , 
         MOVE ,
         GAMES_COUNT , 
@@ -15,14 +13,23 @@ import { INIT_GAME ,
         SPECTARE_CONNECTED, 
         CHANNEL_EXIST, 
         GAME_NOT_FOUND, 
-        MESSAGEALL} 
+        MESSAGEALL,
+        END_CALL,
+        START_CALL_START_TIMER,
+        CALL_STARTED,
+        START_CALL_RECEIVER,
+        ICE_CANDIDATE,
+        ANSWER,
+        OFFER,
+} 
         from '../components/Messages.js';
 import { toast } from 'react-toastify';
 import OverlayGamePage from '../components/OverlayGamePage.jsx';
-import CoordinateSwitch from '../components/CoordinateSwitch.jsx';
 import GameDetails from '../components/GameDetails.jsx';
 import freeice from "freeice";
 import VideoCallElement from '../components/VideoCallElement.jsx';
+import ChessTitle from '../components/ChessTitle.jsx';
+import Nav_Foot_ChessBoard from '../components/Nav_Foot_ChessBoard.jsx';
 
 function GamePage() {
     const socket = UseSocket();
@@ -230,7 +237,7 @@ function GamePage() {
                         setNewMessage(prev => [...prev , {message : message.message , owner : message.owner}]);
                     }
                     break;
-                case "offer":
+                case OFFER:
                     peerConnection.current.setRemoteDescription(
                         new RTCSessionDescription(message.offer)
                     ).then(() => peerConnection.current.createAnswer())
@@ -245,30 +252,30 @@ function GamePage() {
                         })
                         .catch(console.error);
                     break;
-                case "answer":
+                case ANSWER:
                     peerConnection.current.setRemoteDescription(
                         new RTCSessionDescription(message.answer)
                     ).catch(console.error);
                     break;
     
-                case "ice-candidate":
+                case ICE_CANDIDATE:
                     peerConnection.current.addIceCandidate(
                         new RTCIceCandidate(message.candidate)
                     ).catch(console.error);
                     break;
-                case "start_call_receiver" :
+                case START_CALL_RECEIVER :
                     toast.success("opponent wants to start the call");
                     break;
-                case "call_started" :
+                case CALL_STARTED :
                     setCallStarted(true); 
                     setTimeout(async () => {
                         await startCall();
                     }, 1500);
                     break;
-                case "start_call_start_timer" :
+                case START_CALL_START_TIMER :
                     setCallStarted(true);
                     break;
-                case "end_call" :
+                case END_CALL :
                     setCallStarted(false);
                     setWantsVideoAudio(false);
                     toast.success("call ended");
@@ -339,7 +346,6 @@ function GamePage() {
         )
     }
 
-
     return (
         <>
         <div className='text-white flex flex-col'>
@@ -348,7 +354,7 @@ function GamePage() {
                 <VideoCallElement videoElement={videoElement}/>
             }
             <span className='flex text-gray-600 text-sm'><span className='text-gray-400 font-black'>{onlineUsers}</span> Online</span>
-            <div className='flex justify-center items-center text-green-600 font-black text-3xl'>ChessV</div>
+            <ChessTitle/>
             {/* <div className='flex justify-center items-center text-green-600 font-black text-3xl'>
                 <button onClick={ () => {
                     socket.send(JSON.stringify({
@@ -378,40 +384,21 @@ function GamePage() {
             />
             <div className="pt-8 max-w-screen-lg w-full">
                 <div className="grid grid-cols-6 max-sm:flex max-sm:flex-col max-sm:items-center gap-4 w-full">
-                    <div className='col-span-4 flex flex-col justify-center items-center '>
-                        <div className={`text-white pl-1 inline-flex flex-start items-center h-10 bg-slate-900 mb-1 max-sm:w-222 w-111 rounded-sm `}>
-                            <CoordinateSwitch showCharacters={showCharacters} handleShowCharacter={handleShowCharacter}/> 
-                            {channelNumber > 0 && 
-                                <span className="text-gray-400 duration-5 text-2xl items-center pr-2">
-                                    <span className='text-gray-500 text-xl'>Channel &nbsp;</span>{channelNumber}
-                                </span>
-                            }
-                            {chess.inCheck() && 
-                                <span className="animate-pulse duration-5 text-xl flex items-center">
-                                    <Alert severity='warning' sx={{bgcolor:"transparent", marginLeft:"-0.8rem"}}/>
-                                </span>
-                            }
-
-                        </div>
-                        <ChessBoard 
-                            color={color} 
-                            started={started} 
-                            chess={chess} 
-                            setBoard={setBoard} 
-                            socket={socket} 
-                            board={board} 
-                            disabled={opponentsTurn} 
-                            showCharacters={showCharacters} 
-                            specting={specting}
-                        />
-                        <div className={`text-white pl-1 h-10 inline-flex justify-center items-center bg-slate-900 mt-1 max-sm:w-222 w-111 rounded-sm `}>
-                            {viewCount > 0 && 
-                                <span className='text-gray-400 mr-2 text-lg'>
-                                    <span className='text-gray-200 text-xl'>{viewCount}</span>&nbsp; viewer
-                                </span>
-                            }
-                        </div>
-                    </div>
+                    <Nav_Foot_ChessBoard
+                        color={color} 
+                        started={started} 
+                        chess={chess} 
+                        setBoard={setBoard} 
+                        socket={socket} 
+                        board={board}
+                        showCharacters={showCharacters} 
+                        specting={specting}
+                        viewCount={viewCount}
+                        channelNumber={channelNumber}
+                        handleShowCharacter={handleShowCharacter}
+                        opponentsTurn={opponentsTurn}
+                        turn={turn}
+                    />
                     <GameDetails
                         currUser={currUser} 
                         color={color} 

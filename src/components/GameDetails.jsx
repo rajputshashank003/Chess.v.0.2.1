@@ -70,7 +70,7 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
     }
     
     return (
-        <div className=' col-span-2 bg-slate-900 w-full max-sm:w-222 max-sm:h-96 max-sm:mb-4 flex justify-center rounded-md overflow-hidden'>
+        <div className='col-span-2 bg-slate-900 w-full max-sm:w-222 flex justify-center rounded-md overflow-hidden'>
         <div className='pt-8 flex flex-col items-center space-y-2 relative'>
             {/* Greeting the user */}
             <span className='text-white text-2xl font-bold '>
@@ -95,10 +95,6 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                 )}
             </span>
             
-            {/* {message box } */}
-             
-            {<MessagesBox messages={messages} specting={specting} started={started} handleMessageSubmitToAll={handleMessageSubmitToAll} handleMessageSubmit={handleMessageSubmit} /> }
-
             {/* {channel input } */}
             {!started &&
                 <div className='flex flex-start flex-col'>
@@ -117,45 +113,47 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                 </div>
             }
             {/* Button to start the game */}
-            {!started && !findingPlayer && (
-                <div className='flex flex-row space-x-2'>
-                    <Button
-                        onClick={() => {
-                            socket.send(JSON.stringify({ type: INIT_GAME , channel : channelNumber }));
-                            setFindingPlayer(true);
-                        }}
-                        h={"12"}
-                        w={"52"}
-                        disabled={findingPlayer}
-                    >
-                        Play
-                    </Button>
-                {/* {stream button } */}
-                {gamesCount > 0 && 
-                    <Button
-                        onClick={() => {
-                            setStreamPage(true);
-                        }}
-                        h={"12"}
-                        w={"36"}
-                    >
-                        Streams
-                    </Button>
-                }
-                </div>
+            {
+                !started && !findingPlayer && 
+                (
+                    <div className='flex flex-row space-x-2'>
+                        <Button
+                            onClick={() => {
+                                socket.send(JSON.stringify({ type: INIT_GAME , channel : channelNumber }));
+                                setFindingPlayer(true);
+                            }}
+                            h={"12"}
+                            w={"52"}
+                            disabled={findingPlayer}
+                        >
+                            Play
+                        </Button>
+                        {/* {stream button } */}
+                        {
+                            gamesCount > 0 && 
+                            <Button
+                                onClick={() => {
+                                    setStreamPage(true);
+                                }}
+                                h={"12"}
+                                w={"36"}
+                            >
+                                Streams
+                            </Button>
+                        }
+                    </div>
                 )
             }
-            
             {/* Finding player message */}
-            {findingPlayer && (
-                <span className='text-white text-lg font-mono '>
+            {findingPlayer && 
+                <div className="text-white h-fit text-lg font-mono flex flex-col items-center justify-center">
                     <img
-                        src="/SearchingAnimation3.svg"
+                        src="/FindingPlayer.svg"
                     />
                     do min...
-                </span>
-            )}
-            {/* show audio tab */}
+                </div>
+            }
+            {/* show game started tab */}
             {
                 started && !specting &&
                 <div className="flex justify-center items-center gap-4">
@@ -195,6 +193,10 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                     }
                 </div>
             }
+            {/* {message box } */}
+            <div className='absolute bottom-0 max-sm:relative'>   
+                <MessagesBox messages={messages} specting={specting} started={started} handleMessageSubmitToAll={handleMessageSubmitToAll} handleMessageSubmit={handleMessageSubmit} /> 
+            </div>
             <audio className='bg-gray-700 hidden' ref={audioElement} controls={true} autoPlay={true}></audio>
         </div>
     </div> 
