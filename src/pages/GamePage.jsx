@@ -106,13 +106,11 @@ function GamePage() {
         peerConnection.current.ontrack = (event) => {
             if (audioElement.current) {
                 audioElement.current.srcObject = event.streams[0];
-                audioElement.current.play();
             } else {
                 console.error("Audio element is not initialized");
             }
             if (videoElement.current) {
                 videoElement.current.srcObject = event.streams[0];
-                videoElement.current.play();
             } else {
                 console.error("Video element is not initialized");
             }
