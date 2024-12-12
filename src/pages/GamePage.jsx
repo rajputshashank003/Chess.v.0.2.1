@@ -21,6 +21,8 @@ import { INIT_GAME ,
         ICE_CANDIDATE,
         ANSWER,
         OFFER,
+        HELP_RECEIVED,
+        GAMEPLAY_TIPS,
 } 
         from '../components/Messages.js';
 import { toast } from 'react-toastify';
@@ -30,6 +32,7 @@ import freeice from "freeice";
 import VideoCallElement from '../components/VideoCallElement.jsx';
 import ChessTitle from '../components/ChessTitle.jsx';
 import Nav_Foot_ChessBoard from '../components/Nav_Foot_ChessBoard.jsx';
+import SpeakerButton from '../components/SpeakerButton.jsx';
 
 function GamePage() {
     const socket = UseSocket();
@@ -66,6 +69,9 @@ function GamePage() {
     const peerConnection = useRef(null) ;
     const [callStarted, setCallStarted] = useState(false);
     const [wantsVideoAudio , setWantsVideoAudio] = useState(false);
+    const [tipText , setTipText] = useState("");
+    const [showTip , setShowTip] = useState(false);
+    const [audioEffectsCanPlay , setAudioEffectsCanPlay] = useState(true);
 
     const startAudioCapture = async () => {
         try {
@@ -149,6 +155,34 @@ function GamePage() {
         )
         setWantsVideoAudio(false);
     };
+    useEffect(() => {
+        if(!started) return;
+        PlayMoveAudio();
+    },[board]);
+
+    const PlayMoveAudio = () => {
+        const audio = new Audio("/MoveAudioEffect.mp3");
+        if(audioEffectsCanPlay){
+            audio.play()
+                .then(() => {
+                    vibrateDevice();
+                })
+                .catch((err) => {
+                    console.error("Error playing audio:", err);
+                });
+        } 
+    }
+
+    useEffect(() => {
+        if(!callStarted) return ;
+        vibrateDevice();
+    },[callStarted]);
+
+    const vibrateDevice = () => {
+        if (navigator.vibrate) {
+            navigator.vibrate([100])
+        }
+    }
 
     useEffect (() => {
         if(!socket){
@@ -280,6 +314,16 @@ function GamePage() {
                     setWantsVideoAudio(false);
                     toast.success("call ended");
                     break;
+                case GAMEPLAY_TIPS:
+                    setTipText(message.message);
+                    break;
+                case HELP_RECEIVED : 
+                    setTipText(message.message);
+                    console.log(message.message);
+                    break;
+                case 'ai_move' :
+                    console.log(message.payload.move);
+                    break;
                 default:
                     console.log("Unknown message type:", message.type);
             }
@@ -353,7 +397,23 @@ function GamePage() {
                 wantsVideoAudio && callStarted &&
                 <VideoCallElement videoElement={videoElement}/>
             }
-            <span className='flex text-gray-600 text-sm'><span className='text-gray-400 font-black'>{onlineUsers}</span> Online</span>
+            <div className="flex p-1 w-full text-gray-600 text-sm items-center">
+                {/* Left Section: Online Users */}
+                {/* Right Section: Speaker Button */}
+                <div className="flex-1">
+                    <SpeakerButton 
+                        setAudioEffectsCanPlay={setAudioEffectsCanPlay} 
+                        audioEffectsCanPlay={audioEffectsCanPlay} 
+                    />
+                </div>
+                <div className="justify-end ">
+                    <span className="text-gray-400 font-black">
+                        {onlineUsers}
+                    </span>
+                    Online
+                </div>
+
+            </div>
             <ChessTitle/>
             {/* <div className='flex justify-center items-center text-green-600 font-black text-3xl'>
                 <button onClick={ () => {
@@ -398,6 +458,11 @@ function GamePage() {
                         handleShowCharacter={handleShowCharacter}
                         opponentsTurn={opponentsTurn}
                         turn={turn}
+                        setShowTip={setShowTip}
+                        showTip={showTip}
+                        setTipText={setTipText}
+                        tipText={tipText}
+                        audioEffectsCanPlay={audioEffectsCanPlay} 
                     />
                     <GameDetails
                         currUser={currUser} 

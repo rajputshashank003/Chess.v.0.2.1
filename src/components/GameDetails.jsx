@@ -68,6 +68,13 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
             await handleStartCall();
         }
     }
+    const handlePlayButton = () => {
+        socket.send(JSON.stringify({ 
+            type: INIT_GAME , 
+            channel : channelNumber
+        }));
+        setFindingPlayer(true);
+    }
     
     return (
         <div className='col-span-2 bg-slate-900 w-full max-sm:w-222 flex justify-center rounded-md overflow-hidden'>
@@ -118,10 +125,7 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                 (
                     <div className='flex flex-row space-x-2'>
                         <Button
-                            onClick={() => {
-                                socket.send(JSON.stringify({ type: INIT_GAME , channel : channelNumber }));
-                                setFindingPlayer(true);
-                            }}
+                            onClick={handlePlayButton}
                             h={"12"}
                             w={"52"}
                             disabled={findingPlayer}

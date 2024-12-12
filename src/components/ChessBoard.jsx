@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { GAME_OVER, MESSAGE, MOVE } from '../components/Messages.js';
 import { toast } from "react-toastify";
 
-function ChessBoard({color , started , chess , board, socket, setBoard, disabled ,showCharacters, specting,turn}) {
+function ChessBoard({color ,  started , chess , board, socket, setBoard, disabled ,showCharacters, specting,turn}) {
     const [from , setFrom] = useState(null);
     useEffect( () =>{
         if(chess.inCheck()){
@@ -34,7 +34,7 @@ function ChessBoard({color , started , chess , board, socket, setBoard, disabled
                         const squareRepresent = getSquareRepresentation(i, j, color === 'black');
                         return (    
                             <div key={j} onClick={ ()=> {
-                                if(!started || specting || (square && square.color !== color[0])){
+                                if(!started || specting ){
                                     // do nothing... eat 5 STAR
                                 } else if(disabled){
                                     toast.error("opponent's turn ");
