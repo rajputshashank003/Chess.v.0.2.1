@@ -33,6 +33,9 @@ import VideoCallElement from '../components/VideoCallElement.jsx';
 import ChessTitle from '../components/ChessTitle.jsx';
 import Nav_Foot_ChessBoard from '../components/Nav_Foot_ChessBoard.jsx';
 import SpeakerButton from '../components/SpeakerButton.jsx';
+import Header from '../components/Header.jsx';
+import Model1 from '../components/Model1.jsx';
+import ConnectingServer from '../components/ConnectingServer.jsx';
 
 function GamePage() {
     const socket = UseSocket();
@@ -355,14 +358,7 @@ function GamePage() {
     },[winner, GameOver]);
 
     if(!socket) return (
-        <>
-            <div className='text-white flex justify-center pt-10 text-3xl'>
-                Connecting<img className='h-10 pt-5' src="/SearchingAnimation3.svg"/>
-            </div>
-            <div className='text-white flex justify-center pt-10 text-xl'>
-                Wait for 50 sec
-            </div>
-        </>
+        <ConnectingServer/>
     );
 
     const handleShowCharacter = () => {
@@ -397,24 +393,14 @@ function GamePage() {
                 wantsVideoAudio && callStarted &&
                 <VideoCallElement videoElement={videoElement}/>
             }
-            <div className="flex p-1 w-full text-gray-600 text-sm items-center">
-                {/* Left Section: Online Users */}
-                {/* Right Section: Speaker Button */}
-                <div className="flex-1">
-                    <SpeakerButton 
-                        setAudioEffectsCanPlay={setAudioEffectsCanPlay} 
-                        audioEffectsCanPlay={audioEffectsCanPlay} 
-                    />
-                </div>
-                <div className="justify-end ">
-                    <span className="text-gray-400 font-black">
-                        {onlineUsers}
-                    </span>
-                    Online
-                </div>
-
+            <Header 
+                onlineUsers={onlineUsers}
+                audioEffectsCanPlay={audioEffectsCanPlay}
+                setAudioEffectsCanPlay={setAudioEffectsCanPlay}
+            />
+            <div className='relative flex m-4 justify-center items-center'>
+                <ChessTitle/>
             </div>
-            <ChessTitle/>
             {/* <div className='flex justify-center items-center text-green-600 font-black text-3xl'>
                 <button onClick={ () => {
                     socket.send(JSON.stringify({

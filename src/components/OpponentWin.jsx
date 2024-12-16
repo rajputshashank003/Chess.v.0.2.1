@@ -9,7 +9,7 @@ function OpponentWin({setShowLose}) {
     return (
         <div className='inset-0 h-full flex items-center justify-center text-8xl bg-opacity-75 backdrop-blur-md z-60'>
             <div className='text-red-500 text-center flex flex-col' >
-                <div className='p-8 rounded-lg text-center'>
+                <div className='p-8 rounded-md text-center'>
                     <img src="./Loose.png" className='mx-auto w-full h-3/4 pt-10' alt="Winner" />
                 </div>
                 <span 
