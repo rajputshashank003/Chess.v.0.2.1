@@ -3,11 +3,11 @@ import Model1 from './Model1';
 import LandingPageFeatures from './LandingPageFeatures';
 
 function ConnectingServer() {
-    const [waitingTime ,setWaitingTime] = useState(59);
+    const [waitingTime ,setWaitingTime] = useState(49);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setWaitingTime(prev => (prev <= 0 ? 59 : prev - 1));
+            setWaitingTime(prev => (prev <= 0 ? 49 : prev - 1));
         }, 1100);
         return () => clearInterval(interval);
     }, []);
