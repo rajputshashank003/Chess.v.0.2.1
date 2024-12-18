@@ -31,8 +31,8 @@ Welcome to the Chess Web App! This project is a real-time multiplayer chess game
 [Deployed link](https://chessv.netlify.app/)
 
 ![Game Page](image-1.png)
-![Demo](ChessV_MobileDemo.mp4)
-![Demo](ChessV_Demo.mp4)
+![Demo](ChessV_Mobile.mp4)
+![Demo](ChessV_Desktop.mp4)
 
 ## Installation
 
