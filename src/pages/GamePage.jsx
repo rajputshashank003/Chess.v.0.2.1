@@ -385,6 +385,11 @@ function GamePage() {
             })
         )
     }
+    const handleChessTitleClick = () => {
+        if(callStarted){
+            endCall();
+        }
+    }
 
     return (
         <>
@@ -398,7 +403,7 @@ function GamePage() {
                 audioEffectsCanPlay={audioEffectsCanPlay}
                 setAudioEffectsCanPlay={setAudioEffectsCanPlay}
             />
-            <div className='relative flex m-4 justify-center items-center'>
+            <div onClick={handleChessTitleClick} className='relative flex m-4 justify-center items-center'>
                 <ChessTitle/>
             </div>
             {/* <div className='flex justify-center items-center text-green-600 font-black text-3xl'>

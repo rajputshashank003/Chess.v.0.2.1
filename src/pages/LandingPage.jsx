@@ -5,13 +5,15 @@ import UserName from '../components/UserName.jsx';
 import ChessTitle from '../components/ChessTitle.jsx';
 import Model1 from '../components/Model1.jsx';
 import LocomotiveScroll from 'locomotive-scroll';
+import LandingPageFeatures from '../components/LandingPageFeatures.jsx';
 
 function LandingPage() {
     const navigate = useNavigate();
     const locomotiveScroll = new LocomotiveScroll();
     
     return (
-        <div className='flex justify-center'>
+        <>
+        <div className='flex justify-center items-center relative'>
             <div className="p-2 m-8 max-w-screen-md">
                 <div className='relative flex m-4 justify-center items-center'>
                     <ChessTitle/>
@@ -44,6 +46,10 @@ function LandingPage() {
                 </div>
             </div>
         </div>
+        <div className='flex mb-10 justify-center items-center'>
+            <LandingPageFeatures/>
+        </div>
+        </>
     )
 }
 

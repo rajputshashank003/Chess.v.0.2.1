@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Model1 from './Model1';
+import LandingPageFeatures from './LandingPageFeatures';
 
 function ConnectingServer() {
     const [waitingTime ,setWaitingTime] = useState(59);
@@ -21,6 +22,9 @@ function ConnectingServer() {
             </div>
             <div className='flex justify-center items-center'>
                 <Model1/>
+            </div>
+            <div className='flex mb-10 justify-center items-center'>
+                <LandingPageFeatures/>
             </div>
         </>
     )
