@@ -5,6 +5,7 @@ import ChessBoard from '../components/ChessBoard.jsx';
 import { ASK_FOR_HELP, GAMEPLAY_TIPS, HELP_RECEIVED } from './Messages.js';
 import { toast } from 'react-toastify';
 import TypingEffect from './TypingEffect.jsx';
+import TypingEffect2 from './TypingEffect2.jsx';
 
 function Nav_Foot_ChessBoard({
     chess,
@@ -127,7 +128,7 @@ function Nav_Foot_ChessBoard({
                 tipText.length > 0 && showTip && 
                 <div className={`overflow-scroll no-scrollbar text-white pl-1 min-h-10 h-fit flex justify-center items-center bg-slate-900 mt-1 max-sm:w-222 w-111 rounded-sm `}>
                     <div className='text-white'>
-                        <TypingEffect audioEffectsCanPlay={audioEffectsCanPlay}  tipText={tipText}/>
+                        <TypingEffect2 text={tipText} audioEffectsCanPlay={audioEffectsCanPlay}  tipText={tipText}/>
                     </div>    
                 </div>
             }
