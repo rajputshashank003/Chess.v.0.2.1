@@ -6,6 +6,7 @@ import ChessTitle from '../components/ChessTitle.jsx';
 import Model1 from '../components/Model1.jsx';
 import LocomotiveScroll from 'locomotive-scroll';
 import LandingPageFeatures from '../components/LandingPageFeatures.jsx';
+import MotionCardUseCase_1 from '../components/MotionCardUseCase_1.jsx';
 
 function LandingPage() {
     const navigate = useNavigate();
@@ -48,6 +49,9 @@ function LandingPage() {
         </div>
         <div className='flex mb-10 justify-center items-center'>
             <LandingPageFeatures/>
+        </div>
+        <div className="ml-4 mr-4">
+            <MotionCardUseCase_1/>
         </div>
         </>
     )
