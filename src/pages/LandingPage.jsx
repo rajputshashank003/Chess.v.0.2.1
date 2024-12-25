@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import UserName from '../components/UserName.jsx';
 import ChessTitle from '../components/ChessTitle.jsx';
-import Model1 from '../components/Model1.jsx';
+import ChessBoardModel from '../components/ChessBoardModel.jsx';
 import LocomotiveScroll from 'locomotive-scroll';
-import LandingPageFeatures from '../components/LandingPageFeatures.jsx';
 import MotionCardUseCase_1 from '../components/MotionCardUseCase_1.jsx';
+import SkyDive from '../components/SkyDive/index.jsx';
 
 function LandingPage() {
     const navigate = useNavigate();
@@ -23,8 +23,8 @@ function LandingPage() {
                     <div className='flex justify-center'>
                         {/* <img src="/chessboard.jpeg" 
                         className='max-w-100' /> */}
-                        <div className='max-w-100 h-fit'>
-                            <Model1/>
+                        <div className='h-fit'>
+                            <ChessBoardModel/>
                         </div>
                     </div>
                     <div className=' pt-16 z-[9999]'>
@@ -47,8 +47,8 @@ function LandingPage() {
                 </div>
             </div>
         </div>
-        <div className='flex mb-10 justify-center items-center'>
-            <LandingPageFeatures/>
+        <div className=''>
+            <SkyDive />
         </div>
         <div className="ml-4 mr-4">
             <MotionCardUseCase_1/>

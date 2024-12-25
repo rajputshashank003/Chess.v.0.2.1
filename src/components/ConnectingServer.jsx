@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Model1 from './Model1';
+import ChessBoardModel from './ChessBoardModel';
 import LandingPageFeatures from './LandingPageFeatures';
 import MotionCardUseCase_1 from './MotionCardUseCase_1';
 
@@ -22,7 +22,7 @@ function ConnectingServer() {
                 Please wait for {waitingTime} sec.
             </div>
             <div className='flex justify-center items-center'>
-                <Model1/>
+                <ChessBoardModel/>
             </div>
             <div className='flex mb-10 justify-center items-center'>
                 <LandingPageFeatures/>

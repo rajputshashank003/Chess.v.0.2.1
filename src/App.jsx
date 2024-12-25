@@ -4,11 +4,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LandingPage from './pages/LandingPage.jsx';
 import GamePage from './pages/GamePage.jsx';
 import Footer from './components/Footer.jsx';
+import LocomotiveScroll from 'locomotive-scroll';
 
 function App() {
+  const locomotiveScroll = new LocomotiveScroll();
 
   return (
-    <>
+    <div className='bg-slate-950'>
       <div className="min-h-screen h-fit mb-8 max-sm:h-full bg-slate-950 ">
         <BrowserRouter >
           <Routes>
@@ -18,7 +20,7 @@ function App() {
         </BrowserRouter>
       </div>
       <Footer/>
-    </>
+    </div>
   )
 }
 

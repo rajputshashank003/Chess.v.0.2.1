@@ -32,9 +32,7 @@ import freeice from "freeice";
 import VideoCallElement from '../components/VideoCallElement.jsx';
 import ChessTitle from '../components/ChessTitle.jsx';
 import Nav_Foot_ChessBoard from '../components/Nav_Foot_ChessBoard.jsx';
-import SpeakerButton from '../components/SpeakerButton.jsx';
 import Header from '../components/Header.jsx';
-import Model1 from '../components/Model1.jsx';
 import ConnectingServer from '../components/ConnectingServer.jsx';
 
 function GamePage() {
