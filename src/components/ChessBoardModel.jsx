@@ -1,4 +1,4 @@
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls, ContactShadows } from "@react-three/drei";
 import Scene from "../../public/Model2/Scene.jsx";
@@ -21,8 +21,11 @@ function RotatingChessModel() {
 }
 
 function ChessBoardModel() {
+  const [width , setWidth] = useState(window.innerWidth);
   return (
-    <div className={`h-[35rem] max-sm:h-[20rem] max-md:w-[${window.screen.width - 10}px] w-[50rem] overflow-visible`}>
+    <div className={`h-[35rem] max-sm:h-[20rem]  overflow-visible`}
+      style={{ width: `${width}px` }}
+    >
       <Canvas
         shadows
         camera={{ position: [30, 30, 56], fov: 6 }}
@@ -33,7 +36,7 @@ function ChessBoardModel() {
           left: '50%',
           transform: 'translateX(-50%)',
           overflow: 'hidden',
-          zIndex: 99,
+          zIndex: 99
         }}
       >
         <ambientLight intensity={0.4} />

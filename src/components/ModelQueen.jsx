@@ -14,7 +14,7 @@ function RotatingQueen() {
   return (
     <Suspense fallback={null}>
       <group ref={ref}>
-        <Scene scale={window.screen.width < 600 ? 1.3 : 1.6} />
+        <Scene scale={window.innerWidth < 600 ? 1.3 : 1.6} />
       </group>
     </Suspense>
   );
@@ -26,6 +26,9 @@ function ModelQueen() {
       <Canvas
         shadows
         camera={{ position: [30, 30, 56], fov: 30 }}
+        style={{
+          pointerEvents: "none",
+        }}
       >
         <ambientLight intensity={0.4} />
         <directionalLight

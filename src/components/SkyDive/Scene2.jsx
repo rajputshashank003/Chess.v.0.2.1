@@ -12,7 +12,6 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
   const canRef = useRef(null);
   const cloud1Ref = useRef(null);
   const cloud2Ref = useRef(null);
-  const cloud3Ref = useRef(null);
   const cloudsRef = useRef(null);
   const wordsRef = useRef(null);
 
@@ -31,7 +30,6 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
       !canRef.current ||
       !cloud1Ref.current ||
       !cloud2Ref.current ||
-      !cloud3Ref.current ||
       !cloudsRef.current ||
       !wordsRef.current
     )
@@ -79,22 +77,13 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
       duration: DURATION,
     });
 
-    gsap.to(cloud3Ref.current.position, {
-      y: `+=${getYPosition(DISTANCE * 2)}`,
-      x: `+=${getXPosition(DISTANCE * -2)}`,
-      ease: "none",
-      repeat: -1,
-      delay: DURATION / 2,
-      duration: DURATION,
-    });
-
     const scrollTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".skydive",
         pin: true,
         start: "top top",
         end: "+=2000",
-        scrub: 1.5,
+        scrub: 3,
       },
     });
 
@@ -148,7 +137,6 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
       <Clouds ref={cloudsRef}>
         <Cloud ref={cloud1Ref} bounds={[10, 10, 2]} />
         <Cloud ref={cloud2Ref} bounds={[10, 10, 2]} />
-        <Cloud ref={cloud3Ref} bounds={[10, 10, 2]} />
       </Clouds>
 
       <group ref={wordsRef}>
@@ -156,7 +144,7 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
       </group>
 
       <ambientLight intensity={2} color="#9DDEFA" />
-      <Environment files="/hdr/field.hdr" environmentIntensity={1} />
+      <Environment preset="sunset" />
     </group>
   );
 }
@@ -168,7 +156,7 @@ function ThreeText({ sentence, color = "white" }) {
   return words.map((word, wordIndex) => (
     <Text
       key={`${wordIndex}-${word}`}
-      scale={window.screen.width < 600 ? 0.16 : 0.5}
+      scale={window.innerWidth < 600 ? 0.2 : 0.5}
       color={color}
       material={material}
       font="/fonts/Alpino-Variable.woff"

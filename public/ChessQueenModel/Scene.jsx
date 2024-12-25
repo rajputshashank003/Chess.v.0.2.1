@@ -7,9 +7,14 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model({props, scale}) {
-  const { nodes, materials } = useGLTF('/ChessQueenModel/scene.gltf')
+  const { nodes, materials } = useGLTF('/ChessQueenModel/scene.gltf', {
+    draco: true,
+    simplify: true,
+    maxEdgeLength: 1,
+    preserveTexture: true,
+  })
   return (
-    <group scale={scale ? scale : window.screen.width < 600 ? 0.06 : 0.13} {...props} dispose={null}>
+    <group scale={scale ? scale : window.innerWidth < 600 ? 0.12 : 0.14} {...props} dispose={null}>
       <mesh geometry={nodes.geo1_Material_1_0.geometry} material={materials.Material_1} />
     </group>
   )
