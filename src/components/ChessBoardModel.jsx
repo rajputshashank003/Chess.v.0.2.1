@@ -1,7 +1,7 @@
 import React, { Suspense, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls, ContactShadows } from "@react-three/drei";
-import Scene from "../../public/Model2/Scene.jsx";
+import Scene from "../../public/ChessBoardModel/Scene.jsx";
 
 function RotatingChessModel() {
   const ref = useRef();

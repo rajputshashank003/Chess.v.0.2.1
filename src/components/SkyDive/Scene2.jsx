@@ -88,6 +88,11 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
     });
 
     scrollTl
+      // .to(".skydive",{
+      //   backgroundColor: "#C0F0F5",
+      //   overwrite: "auto",
+      //   duration: 0.1,
+      // })
       .to(".features_title", {
         opacity: 0,        
         y: -20,            
@@ -117,7 +122,12 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
         duration: 0.5,
         ease: "back.in(1.7)",
       })
-      .to(cloudsRef.current.position, { z: 7, duration: 0.5 });
+      .to(cloudsRef.current.position, { z: 7, duration: 0.5 })
+      // .to(".skydive",{
+      //   backgroundColor: "transparent",
+      //   overwrite: "auto",
+      //   duration: 0.1,
+      // });
   }, []);
 
   return (
@@ -130,7 +140,7 @@ export default function Scene2({ sentence = "VIDEO call ,AUDIO call ,CHAT ,Ai hi
           floatIntensity={3}
           floatSpeed={3}
         >
-          <pointLight intensity={30} color="#8C0413" decay={0.6} />
+          <pointLight intensity={30} color="#8C0413" decay={2} />
         </FloatingQueen>
       </group>
 
@@ -156,7 +166,7 @@ function ThreeText({ sentence, color = "white" }) {
   return words.map((word, wordIndex) => (
     <Text
       key={`${wordIndex}-${word}`}
-      scale={window.innerWidth < 600 ? 0.2 : 0.5}
+      scale={window.innerWidth < 600 ? 0.2 : 0.7}
       color={color}
       material={material}
       font="/fonts/Alpino-Variable.woff"

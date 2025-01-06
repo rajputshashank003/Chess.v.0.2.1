@@ -7,7 +7,7 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/Model2/scene.gltf')
+  const { nodes, materials } = useGLTF('/ChessBoardModel/scene.gltf')
   return (
     <group {...props} dispose={null} scale={20} >
       <mesh geometry={nodes.Object_5.geometry} material={materials.board} position={[0, 0.01, 0]} rotation={[0, Math.PI / 2, 0]} scale={[1, 0.067, 1]} />
@@ -47,4 +47,4 @@ export default function Model(props) {
   )
 }
 
-useGLTF.preload('/Model2/scene.gltf')
+useGLTF.preload('/ChessBoardModel/scene.gltf')

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import UserName from '../components/UserName.jsx';
@@ -7,11 +7,16 @@ import ChessBoardModel from '../components/ChessBoardModel.jsx';
 import LocomotiveScroll from 'locomotive-scroll';
 import MotionCardUseCase_1 from '../components/MotionCardUseCase_1.jsx';
 import SkyDive from '../components/SkyDive/index.jsx';
+import UseSocket from '../hooks/useSocket.jsx';
 
 function LandingPage() {
+    const socket = UseSocket();
     const navigate = useNavigate();
-    const locomotiveScroll = new LocomotiveScroll();
-    
+
+    useEffect(() => {
+        const locomotiveScroll = new LocomotiveScroll();
+    },[]);
+
     return (
         <>
         <div className='flex justify-center items-center relative'>
@@ -57,4 +62,4 @@ function LandingPage() {
     )
 }
 
-export default LandingPage
+export default LandingPage;
