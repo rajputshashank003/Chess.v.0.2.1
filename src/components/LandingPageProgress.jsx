@@ -19,6 +19,14 @@ const LandingPageProgress = () => {
                 setNum(progress);
             },
         })
+        .to(".chess_board_model", {
+            x : -100,
+            scale : 0.95
+        })
+        .to(".chess_title_9 , .play_text_name , .play_button_online", {
+            opacity : 0,
+            x : 100,
+        })
         .to(".text-span", {
             text: "",
             duration: 0.1,
@@ -35,7 +43,19 @@ const LandingPageProgress = () => {
             opacity: 0,
             y: 100,
             onComplete: () => setVisible(false),
-        });
+        }, "chess_board")
+        .to(".chess_board_model", {
+            x : 0,
+            scale : 1,
+            duration : 1.5
+        }, "chess_board")
+        .to(".chess_title_9 , .play_text_name , .play_button_online", {
+            opacity : 1,
+            x : 0,
+            stagger : 0.2,
+            duration : 1
+        })
+        ;
 
     }, []);
 
@@ -58,9 +78,6 @@ const LandingPageProgress = () => {
                         transform: `scaleX(${num !== 0 ? 1 : 0})`,
                     }}
                 />
-                <div className="absolute z-[99] mt-8 top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                    <span className="text-4xl text-span font-bold text-green-600">{num}</span>
-                </div>
             </div>
         </div>
     );

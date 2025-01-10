@@ -23,24 +23,24 @@ function LandingPage() {
         <LandingPageProgress/>
         <div className='flex justify-center items-center relative'>
             <div className="p-2 m-8 max-w-screen-md">
-                <div className='relative flex m-4 justify-center items-center'>
+                <div className='relative chess_title_9 flex m-4 justify-center items-center'>
                     <ChessTitle/>
                 </div>
                 <div className="grid pt-4 grid-cols-1 gap-4 md:grid-cols-2">
                     <div className='flex justify-center'>
                         {/* <img src="/chessboard.jpeg" 
                         className='max-w-100' /> */}
-                        <div className='h-fit'>
+                        <div className='h-fit chess_board_model'>
                             <ChessBoardModel/>
                         </div>
                     </div>
                     <div className=' pt-16 z-[9999]'>
-                        <div className="flex justify-center">
+                        <div className="flex play_text_name justify-center">
                             <h1 className="font-bold text-4xl text-white"> 
                                 Play Chess Online
                             </h1>
                         </div>
-                        <div className='mt-8 flex flex-col items-center space-y-4'>
+                        <div className='mt-8 flex play_button_online flex-col items-center space-y-4'>
                             <UserName />
                             <Button 
                                 onClick={() => navigate("/game")}
