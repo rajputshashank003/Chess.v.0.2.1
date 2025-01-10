@@ -8,6 +8,7 @@ import LocomotiveScroll from 'locomotive-scroll';
 import MotionCardUseCase_1 from '../components/MotionCardUseCase_1.jsx';
 import SkyDive from '../components/SkyDive/index.jsx';
 import UseSocket from '../hooks/useSocket.jsx';
+import LandingPageProgress from '../components/LandingPageProgress.jsx';
 
 function LandingPage() {
     const socket = UseSocket();
@@ -19,6 +20,7 @@ function LandingPage() {
 
     return (
         <>
+        <LandingPageProgress/>
         <div className='flex justify-center items-center relative'>
             <div className="p-2 m-8 max-w-screen-md">
                 <div className='relative flex m-4 justify-center items-center'>
