@@ -8,7 +8,7 @@ function ConnectingServer() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setWaitingTime(prev => (prev <= 0 ? 49 : prev - 1));
+            setWaitingTime(prev => (prev <= 0 ? 39 : prev - 1));
         }, 1100);
         return () => clearInterval(interval);
     }, []);

@@ -23,7 +23,7 @@ function RotatingChessModel() {
 function ChessBoardModel() {
   const [width , setWidth] = useState(window.innerWidth);
   return (
-    <div className={`h-[35rem] max-sm:h-[20rem]  overflow-visible`}
+    <div className={`h-[35rem] max-sm:h-[20rem] chess_board_model_par overflow-visible`}
       style={{ width: `${width}px` }}
     >
       <Canvas

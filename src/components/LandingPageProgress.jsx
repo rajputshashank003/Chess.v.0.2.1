@@ -19,17 +19,19 @@ const LandingPageProgress = () => {
                 setNum(progress);
             },
         })
-        .to(".chess_board_model", {
+        .to(".chess_board_model_par", {
+            opacity : 0,
+            width : window.innerWidth + 200,
             x : -100,
             scale : 0.95
         })
-        .to(".chess_title_9 , .play_text_name , .play_button_online", {
+        .to(".chess_title_9", {
+            opacity : 0,
+            x : -100,
+        })
+        .to(".play_text_name , .play_button_online", {
             opacity : 0,
             x : 100,
-        })
-        .to(".text-span", {
-            text: "",
-            duration: 0.1,
         })
         .to(".progress-line", {
             width : 0,
@@ -44,15 +46,22 @@ const LandingPageProgress = () => {
             y: 100,
             onComplete: () => setVisible(false),
         }, "chess_board")
-        .to(".chess_board_model", {
+        .to(".chess_board_model_par", {
+            opacity : 1,
             x : 0,
+            width : window.innerWidth,
             scale : 1,
             duration : 1.5
         }, "chess_board")
-        .to(".chess_title_9 , .play_text_name , .play_button_online", {
+        .to(".chess_title_9", {
             opacity : 1,
             x : 0,
-            stagger : 0.2,
+            duration : 1
+        })
+        .to(".play_text_name , .play_button_online", {
+            opacity : 1,
+            x : 0,
+            stagger : 0.5,
             duration : 1
         })
         ;
