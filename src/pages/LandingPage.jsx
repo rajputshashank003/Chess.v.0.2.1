@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import UserName from '../components/UserName.jsx';
@@ -7,12 +7,12 @@ import ChessBoardModel from '../components/ChessBoardModel.jsx';
 import LocomotiveScroll from 'locomotive-scroll';
 import MotionCardUseCase_1 from '../components/MotionCardUseCase_1.jsx';
 import SkyDive from '../components/SkyDive/index.jsx';
-import UseSocket from '../hooks/useSocket.jsx';
-import LandingPageProgress from '../components/LandingPageProgress.jsx';
+import Timeline from '../components/TextReveal_ScrollTrigger/Timeline.jsx';
+import Loading from '../components/Loading.jsx';
 
 function LandingPage() {
-    const socket = UseSocket();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const locomotiveScroll = new LocomotiveScroll();
@@ -20,7 +20,7 @@ function LandingPage() {
 
     return (
         <>
-        <LandingPageProgress/>
+        <Loading setLoading={setLoading} />
         <div className='flex justify-center items-center relative'>
             <div className="p-2 m-8 max-w-screen-md">
                 <div className='relative chess_title_9 flex m-4 justify-center items-center'>
@@ -54,6 +54,7 @@ function LandingPage() {
                 </div>
             </div>
         </div>
+        <Timeline/>
         <div className=''>
             <SkyDive />
         </div>

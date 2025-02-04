@@ -14,9 +14,8 @@ const SkyDive = ({ }) => {
         Features
       </div>
       <Canvas  
-        gl={{ antialias: false, pixelRatio: 0.5 }}
+        gl={{ antialias: false, pixelRatio: 0.25 }}
         dpr={[0.5, 1]} 
-        shadows={{ enabled: true, type: THREE.BasicShadowMap }}
         style={{
           position: 'fixed',
           top: 0,
@@ -26,7 +25,7 @@ const SkyDive = ({ }) => {
           pointerEvents: 'none',
           zIndex: 30,
         }}
-        camera={{ fov: 27 }} 
+        camera={{ fov: 30 }} 
         className='h-screen w-screen'
       >
         <Scene2/>
