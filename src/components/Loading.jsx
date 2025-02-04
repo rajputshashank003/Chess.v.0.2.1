@@ -89,19 +89,19 @@ const Loading = ({setLoading}) => {
       className='grid grid-cols-9 '>
       <div className='relative bg-[#FF7120] box_ h-screen col-span-3'>
         <div className='absolute ml-8 sm:ml-16 md:ml-28 hr_line border-l h-full border-black text-black' />
-        <div className='absolute ml-4 progress_digit_1 sm:ml-8 md:ml-12 progress_digit  bottom-0 sm:-bottom-10  left-1/2 -translate-x-1/2'>
+        <div className='absolute ml-4 progress_digit_1 sm:ml-8 md:ml-12 progress_digit  bottom-8 sm:-bottom-10  left-1/2 -translate-x-1/2'>
           0
         </div>
       </div>
       <div className='  relative bg-[#FF7120] box_ h-screen col-span-2'>
         <div className='absolute hr_line border-l h-full border-black text-black' />
-        <div className='absolute progress_digit_2 progress_digit bottom-0 sm:-bottom-10 left-1/2 -translate-x-1/2 '>
+        <div className='absolute progress_digit_2 progress_digit bottom-8 sm:-bottom-10 left-1/2 -translate-x-1/2 '>
           0
         </div>
       </div>
       <div className='  relative bg-[#FF7120] box_ h-screen col-span-2'>
         <div className='absolute hr_line border-l h-full border-black text-black' />
-        <div className='absolute progress_digit_3 progress_digit bottom-0 sm:-bottom-10 left-1/2 -translate-x-1/2'>
+        <div className='absolute progress_digit_3 progress_digit bottom-8 sm:-bottom-10 left-1/2 -translate-x-1/2'>
           0
         </div>
       </div>
