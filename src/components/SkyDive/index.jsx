@@ -10,8 +10,8 @@ const SkyDive = ({ }) => {
     <Bounded
       className="skydive h-screen "
     >
-      <div className="features_title text-2xl font-bold text-white px-8 py-2 mb-2 w-fit rounded-2xl bg-slate-900">
-        Features
+      <div style={{ fontFamily: "'LabsAmiga'" }} className="features_title text-2xl font-bold text-white px-8 py-2 mb-2 w-fit rounded-2xl bg-slate-900">
+        FEATURES
       </div>
       <Canvas  
         gl={{ antialias: true, pixelRatio: 1 }}

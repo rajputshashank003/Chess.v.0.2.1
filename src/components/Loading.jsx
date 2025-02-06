@@ -63,6 +63,20 @@ const Loading = ({setLoading}) => {
         document.querySelector(".progress_digit_2").textContent = progress;
       },
     })
+    .to(".progress_digit_3", {
+      duration: .5, 
+      yoyo: true,
+      ease: "power2.inOut",
+      onUpdate: function () {
+        let progress = Math.round(this.progress() * 9);
+        document.querySelector(".progress_digit_3").textContent = progress;
+      },
+      onComplete : () => {
+        document.querySelector(".progress_digit_2").textContent = 0;
+        document.querySelector(".progress_digit_3").textContent = 0;
+        document.querySelector(".progress_digit_1").textContent = 1;
+      }
+    })
     .to(".progress_digit", {
       opacity : 0.5,
       stagger : 0.1,
