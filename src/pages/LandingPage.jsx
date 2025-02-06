@@ -58,7 +58,7 @@ function LandingPage() {
             </div>
         </div>
         <Timeline/>
-        <div className='border-8 h-fit'>
+        <div className='h-fit'>
             <SkyDive />
         </div>
         <div className="ml-4 mr-4">
