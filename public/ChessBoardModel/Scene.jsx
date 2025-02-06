@@ -7,7 +7,7 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/ChessBoardModel/scene.gltf')
+  const { nodes, materials } = useGLTF('/ChessBoardModel/boardModel.gltf')
   return (
     <group {...props} dispose={null} scale={20} >
       <mesh geometry={nodes.Object_5.geometry} material={materials.board} position={[0, 0.01, 0]} rotation={[0, Math.PI / 2, 0]} scale={[1, 0.067, 1]} />

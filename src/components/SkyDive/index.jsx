@@ -8,14 +8,15 @@ const SkyDive = ({ }) => {
 
   return (
     <Bounded
-      className="skydive h-screen "
+      className="skydive h-screen border-8 border-blue-500 "
     >
       <div className="features_title text-2xl font-bold text-white px-8 py-2 mb-2 w-fit rounded-2xl bg-slate-900">
         Features
       </div>
       <Canvas  
-        gl={{ antialias: false, pixelRatio: 0.25 }}
-        dpr={[0.5, 1]} 
+        gl={{ antialias: true, pixelRatio: 1 }}
+        dpr={2} 
+        shadows={{ enabled: true, type: THREE.BasicShadowMap }}
         style={{
           position: 'fixed',
           top: 0,
@@ -25,7 +26,7 @@ const SkyDive = ({ }) => {
           pointerEvents: 'none',
           zIndex: 30,
         }}
-        camera={{ fov: 30 }} 
+        camera={{ fov: 27 }} 
         className='h-screen w-screen'
       >
         <Scene2/>

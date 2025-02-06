@@ -18,9 +18,12 @@ function LandingPage() {
         const locomotiveScroll = new LocomotiveScroll();
     },[]);
 
+    if(loading) {
+        return <Loading setLoading={setLoading} />
+    }
+
     return (
         <>
-        <Loading setLoading={setLoading} />
         <div className='flex justify-center items-center relative'>
             <div className="p-2 m-8 max-w-screen-md">
                 <div className='relative chess_title_9 flex m-4 justify-center items-center'>
@@ -55,7 +58,7 @@ function LandingPage() {
             </div>
         </div>
         <Timeline/>
-        <div className=''>
+        <div className='border-8 h-fit'>
             <SkyDive />
         </div>
         <div className="ml-4 mr-4">
