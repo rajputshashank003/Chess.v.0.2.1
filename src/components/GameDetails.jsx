@@ -14,7 +14,7 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                         handleMessageSubmit , started , findingPlayer , socket , channelNumber,gamesCount , 
                         setStreamPage ,setFindingPlayer ,handleChannelNumber, audioElement , callStarted ,
                         handleStartCall, endCall, wantsVideoAudio, setWantsVideoAudio ,
-                        selectBetOverlay, betAmount, setBetAmount, setSelectBetOverlay
+                        selectBetOverlay, betAmount, setBetAmount, setSelectBetOverlay, setBetGame
                     }) 
     {
     
@@ -90,7 +90,7 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                     <div className='h-fit w-36 max-sm:absolute top-48 rounded-xl flex justify-center items-center flex-col gap-2 text-4xl bg-slate-800 text-slate-200 p-4'>
                         {
                             [0.1, 0.2 , 0.5 , 1].map((val , ind) => (
-                                <BetButton key={ind} setFindingPlayer={setFindingPlayer} socket={socket} setSelectBetOverlay={setSelectBetOverlay} setBetAmount={setBetAmount} amount={val} />
+                                <BetButton setBetGame={setBetGame} key={ind} setFindingPlayer={setFindingPlayer} socket={socket} setSelectBetOverlay={setSelectBetOverlay} setBetAmount={setBetAmount} amount={val} />
                             ))
                         }
                     </div>
@@ -152,7 +152,7 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
             {
                 !started && !findingPlayer && 
                 (
-                    <div className='flex flex-row space-x-2'>
+                    <div className='flex flex-wrap gap-2 justify-center items-center space-x-2'>
                         <Button
                             onClick={handlePlayButton}
                             h={"12"}

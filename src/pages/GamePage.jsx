@@ -78,7 +78,8 @@ function GamePage() {
 
 
     const [selectBetOverlay , setSelectBetOverlay] = useState(false);
-    const [betAmount , setBetAmount] = useState(0.1);
+    const [betAmount , setBetAmount] = useState(0);
+    const [betGame ,setBetGame] = useState(false);
 
     const startAudioCapture = async () => {
         try {
@@ -437,6 +438,7 @@ function GamePage() {
                 streamOver={streamOver}
                 started={started}
                 betAmount={betAmount}
+                betGame={betGame}
             />
             <div className="pt-8 max-w-screen-lg w-full">
                 <div className="grid grid-cols-6 max-sm:flex max-sm:flex-col max-sm:items-center gap-4 w-full">
@@ -486,6 +488,7 @@ function GamePage() {
                         setBetAmount={setBetAmount}
                         setSelectBetOverlay={setSelectBetOverlay}
                         selectBetOverlay={selectBetOverlay}
+                        setBetGame={setBetGame}
                     />
                 </div>
             </div>

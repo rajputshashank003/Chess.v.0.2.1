@@ -4,7 +4,7 @@ import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana
 import { toast } from 'react-toastify';
 import {INIT_GAME } from "./Messages";
 
-const BetButton = ({setSelectBetOverlay,setBetAmount, amount, socket, setFindingPlayer}) => {
+const BetButton = ({setSelectBetOverlay,setBetAmount, amount, socket, setFindingPlayer, setBetGame}) => {
     const [selectingAmount , setSelectingAmount] = useState(false);
 
     const handleSetAmount = async () => {
@@ -27,6 +27,7 @@ const BetButton = ({setSelectBetOverlay,setBetAmount, amount, socket, setFinding
             bet_game : true,
             bet_amount : amount
         }));
+        setBetGame(true);
         setFindingPlayer(true);
     }
 

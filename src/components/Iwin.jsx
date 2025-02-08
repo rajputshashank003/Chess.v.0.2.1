@@ -4,7 +4,7 @@ import { sendWinnerAmount } from '../services/cryptoService';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { toast } from 'react-toastify';
 
-function Iwin({betAmount}) {
+function Iwin({betAmount, betGame}) {
     const navigate = useNavigate();
     const handleNavigate = () => {
         navigate("/");
@@ -14,7 +14,7 @@ function Iwin({betAmount}) {
 
     useEffect(() => {
         async function sendWinAmount(){
-            if(sent) return ;
+            if(sent || !betGame) return ;
             const sol = betAmount * 2 * 0.90;
             const res = await sendWinnerAmount(sol, wallet);
             if(!res){
