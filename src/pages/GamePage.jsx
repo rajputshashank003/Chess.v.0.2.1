@@ -34,6 +34,8 @@ import ChessTitle from '../components/ChessTitle.jsx';
 import Nav_Foot_ChessBoard from '../components/Nav_Foot_ChessBoard.jsx';
 import Header from '../components/Header.jsx';
 import ConnectingServer from '../components/ConnectingServer.jsx';
+import { sendWinnerAmount } from '../services/cryptoService.js';
+import { useConnection } from '@solana/wallet-adapter-react';
 
 function GamePage() {
     const socket = UseSocket();
@@ -73,6 +75,10 @@ function GamePage() {
     const [tipText , setTipText] = useState("");
     const [showTip , setShowTip] = useState(false);
     const [audioEffectsCanPlay , setAudioEffectsCanPlay] = useState(true);
+
+
+    const [selectBetOverlay , setSelectBetOverlay] = useState(false);
+    const [betAmount , setBetAmount] = useState(0.1);
 
     const startAudioCapture = async () => {
         try {
@@ -184,7 +190,7 @@ function GamePage() {
             navigator.vibrate([100])
         }
     }
-
+    
     useEffect (() => {
         if(!socket){
             return;
@@ -430,6 +436,7 @@ function GamePage() {
                 winner={winner}
                 streamOver={streamOver}
                 started={started}
+                betAmount={betAmount}
             />
             <div className="pt-8 max-w-screen-lg w-full">
                 <div className="grid grid-cols-6 max-sm:flex max-sm:flex-col max-sm:items-center gap-4 w-full">
@@ -475,6 +482,10 @@ function GamePage() {
                         endCall={endCall}
                         setWantsVideoAudio={setWantsVideoAudio}
                         wantsVideoAudio={wantsVideoAudio}
+                        betAmount={betAmount}
+                        setBetAmount={setBetAmount}
+                        setSelectBetOverlay={setSelectBetOverlay}
+                        selectBetOverlay={selectBetOverlay}
                     />
                 </div>
             </div>

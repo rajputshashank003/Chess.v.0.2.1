@@ -7,11 +7,14 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 import VideoCallButton from './VideoCallButton.jsx';
 import EndCall from './EndCall.jsx';
+import BetButton from './BetButton.jsx';
+import { WalletDisconnectButton, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 function GameDetails({currUser , color , moveCount , opponentsTurn, messages, specting , 
                         handleMessageSubmit , started , findingPlayer , socket , channelNumber,gamesCount , 
                         setStreamPage ,setFindingPlayer ,handleChannelNumber, audioElement , callStarted ,
-                        handleStartCall, endCall, wantsVideoAudio, setWantsVideoAudio
+                        handleStartCall, endCall, wantsVideoAudio, setWantsVideoAudio ,
+                        selectBetOverlay, betAmount, setBetAmount, setSelectBetOverlay
                     }) 
     {
     
@@ -75,9 +78,35 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
         }));
         setFindingPlayer(true);
     }
-    
+
     return (
         <div className='col-span-2 bg-slate-900 w-full max-sm:w-222 flex justify-center rounded-md overflow-hidden'>
+            {
+                selectBetOverlay &&
+                <div className='fixed top-0 left-0  h-screen w-screen text-black bg-black bg-opacity-[0.5] z-[999] backdrop-blur-sm flex max-sm:flex-col justify-center items-center'>
+                    <div className='fixed top-10 left-1/2 -translate-x-1/2 text-white text-4xl uppercase '>
+                        Select your bet amount
+                    </div>
+                    <div className='h-fit w-36 max-sm:absolute top-48 rounded-xl flex justify-center items-center flex-col gap-2 text-4xl bg-slate-800 text-slate-200 p-4'>
+                        {
+                            [0.1, 0.2 , 0.5 , 1].map((val , ind) => (
+                                <BetButton key={ind} setFindingPlayer={setFindingPlayer} socket={socket} setSelectBetOverlay={setSelectBetOverlay} setBetAmount={setBetAmount} amount={val} />
+                            ))
+                        }
+                    </div>
+                    <div className='flex flex-wrap max-sm:absolute top-[30rem] justify-center items-center'>
+                        <div className='p-4'>
+                            <WalletMultiButton />
+                        </div>
+                        <div className='p-4'>
+                            <WalletDisconnectButton />
+                        </div>
+                    </div>
+                    <div onClick={() => setSelectBetOverlay(false)} className='fixed top-10 right-10 cursor-pointer hover:scale-[1.2] duration-200 text-4xl text-white'>
+                        X
+                    </div>
+                </div>
+            }
         <div className='pt-8 flex flex-col items-center space-y-2 relative'>
             {/* Greeting the user */}
             <span className='text-white text-2xl font-bold '>
@@ -131,6 +160,15 @@ function GameDetails({currUser , color , moveCount , opponentsTurn, messages, sp
                             disabled={findingPlayer}
                         >
                             Play
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setSelectBetOverlay(true);
+                            }}
+                            h={"12"}
+                            w={"36"}
+                        >
+                            Bet game
                         </Button>
                         {/* {stream button } */}
                         {

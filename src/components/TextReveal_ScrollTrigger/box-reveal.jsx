@@ -6,7 +6,7 @@ export const BoxReveal = ({
   width = "fit-content",
   boxColor,
   duration,
-  triggerInViewport = true // New prop to control visibility based on viewport
+  triggerInViewport = true 
 }) => {
   const mainControls = useAnimation();
   const slideControls = useAnimation();

@@ -5,7 +5,9 @@ import StreamPage from './StreamPage.jsx'
 import StreamOverPage from './StreamOverPage.jsx'
 import Gamestarted from './Gamestarted.jsx'
 
-function OverlayGamePage({started , streamOver ,specting , showLose , showWin , setShowLose, streamPage , channelNumber, setChannelNumber, setStreamPage , setSpecting , gamesCount ,socket, winner}) {
+function OverlayGamePage({started , streamOver ,specting , showLose , showWin , setShowLose, streamPage , channelNumber, setChannelNumber, setStreamPage , setSpecting , gamesCount ,socket, winner
+    ,betAmount
+}) {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -29,7 +31,7 @@ function OverlayGamePage({started , streamOver ,specting , showLose , showWin , 
     return (
         <>
             <div className={`fixed h-full w-full z-50 justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 ${showWin ? 'scale-100' : 'scale-0'}`}>
-                {!specting && !showLose && showWin && <Iwin />}
+                {!specting && !showLose && showWin && <Iwin betAmount={betAmount} />}
             </div>
             <div className={`fixed h-full w-full z-50 justify-center items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 ${showLose ? 'scale-100' : 'scale-0'}`}>
                 {!specting && showLose && <OpponentWin setShowLose={setShowLose}/> }

@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { sendWinnerAmount } from '../services/cryptoService';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { toast } from 'react-toastify';
 
-function Iwin() {
+function Iwin({betAmount}) {
     const navigate = useNavigate();
     const handleNavigate = () => {
         navigate("/");
     }
+    const wallet = useWallet();
+    const [sent ,setSent] = useState(false);
+
+    useEffect(() => {
+        async function sendWinAmount(){
+            if(sent) return ;
+            const sol = betAmount * 2 * 0.90;
+            const res = await sendWinnerAmount(sol, wallet);
+            if(!res){
+                toast.error("transaction error");
+            } else {
+                toast.success("win amount sent success")
+            }
+            setSent(true);
+        }
+        sendWinAmount();
+    }, []);
     return (
         <div className='inset-0 flex items-center justify-center text-8xl bg-opacity-75 backdrop-blur-md z-60'>
             <div className='p-8 rounded-md text-center'>

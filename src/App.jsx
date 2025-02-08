@@ -7,9 +7,13 @@ import Footer from './components/Footer.jsx';
 import LocomotiveScroll from 'locomotive-scroll';
 
 import { useGLTF } from "@react-three/drei";
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 useGLTF.preload("/ChessBoardModel/boardModel.gltf");
 useGLTF.preload("/ChessQueenModel/scene.gltf");
 import("./components/ChessBoardModel.jsx");
+
+import "@solana/wallet-adapter-react-ui/styles.css";
 
 function App() {
   
@@ -20,12 +24,18 @@ function App() {
   return (
     <div className='bg-slate-950'>
       <div className="min-h-screen h-fit mb-8 max-sm:h-full bg-slate-950 ">
-        <BrowserRouter >
-          <Routes>
-            <Route path="/" element={<LandingPage/>} />
-            <Route path="/game" element={<GamePage/>} />
-          </Routes>
-        </BrowserRouter>
+        <ConnectionProvider endpoint={"https://api.devnet.solana.com"}>
+          <WalletProvider wallets={[]} autoConnect>
+            <WalletModalProvider>
+              <BrowserRouter >
+                <Routes>
+                  <Route path="/" element={<LandingPage/>} />
+                  <Route path="/game" element={<GamePage/>} />
+                </Routes>
+              </BrowserRouter>
+            </WalletModalProvider>
+          </WalletProvider>
+        </ConnectionProvider>
       </div>
       <Footer/>
     </div>
