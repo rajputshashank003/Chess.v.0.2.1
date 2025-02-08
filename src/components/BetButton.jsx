@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { INIT_GAME } from '../../../api/src/Messages';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { fetchSolConversionRate } from '../services/cryptoService';
 import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 import { toast } from 'react-toastify';
 

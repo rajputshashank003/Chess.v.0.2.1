@@ -1,26 +1,3 @@
-import axios from "axios";
-let rate = undefined;
-
-const findRate = async () => {
-    const response = await axios.get("https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=inr");
-    rate = response.data.solana.inr;
-}
-
-const sendTo = "GhkRMpiNFCZfM6kycBZ5vjo7MvU3y1keJBVRTk59CUZh";
-
-export const fetchSolConversionRate = async (amount) => {
-    try {
-        // if(!rate) {
-        //     await findRate();
-        // }
-        const solToInrRate = rate ? rate : 20862.84;// response.data.solana.inr ;
-        const amountInSOL = amount /  solToInrRate;
-        return parseFloat(amountInSOL).toFixed(9);
-    } catch (error) {
-        console.error("Error fetching SOL conversion rate:", error);
-    }
-};
-
 import { Keypair, PublicKey, SystemProgram, Transaction, LAMPORTS_PER_SOL, sendAndConfirmTransaction, Connection } from "@solana/web3.js";
 import bs58 from "bs58";
 
