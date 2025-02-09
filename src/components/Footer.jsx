@@ -4,7 +4,7 @@ function Footer() {
     return (
         <footer className="bg-white rounded-md shadow m-4 mt-0 dark:bg-slate-900">
             <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-            <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="https://chessv.netlify.app/" className="hover:underline">ChessV</a> All Rights Reserved.
+            <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {new Date().getFullYear()} <a href="https://chessv.netlify.app/" className="hover:underline">ChessV</a> All Rights Reserved.
             </span>
             <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
                 <li>

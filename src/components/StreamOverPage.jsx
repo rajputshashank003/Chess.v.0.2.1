@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function StreamOverPage({ winner}) {
     const navigate = useNavigate();
     const handleNavigate = () => {
-        navigate("/");
+        navigate("/game");
     }
     return (
         <div className='inset-0 flex items-center justify-center h-full text-8xl bg-opacity-75 backdrop-blur-md z-60'>
