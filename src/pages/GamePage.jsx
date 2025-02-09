@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import UseSocket from '../hooks/useSocket.jsx';
+import { useSocket } from '../hooks/useSocket.jsx';
 import { Chess } from "chess.js";
 import { INIT_GAME , 
         MOVE ,
@@ -38,7 +38,7 @@ import { sendWinnerAmount } from '../services/cryptoService.js';
 import { useConnection } from '@solana/wallet-adapter-react';
 
 function GamePage() {
-    const socket = UseSocket();
+    const socket = useSocket();
     const [chess, setChess] = useState(new Chess());
     const [board , setBoard] = useState(chess.board());
     const [started , setStarted] = useState(false);

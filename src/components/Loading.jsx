@@ -1,10 +1,10 @@
 import React from 'react'
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react"
-import UseSocket from '../hooks/useSocket';
+import { useSocket } from '../hooks/useSocket';
 
 const Loading = ({setLoading}) => {
-  const socket = UseSocket();
+  const socket = useSocket();
 
   useGSAP(() =>{
     const gtl = gsap.timeline();
