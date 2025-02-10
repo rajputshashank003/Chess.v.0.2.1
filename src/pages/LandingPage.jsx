@@ -15,7 +15,7 @@ import { useSocket } from '../hooks/useSocket.jsx';
 
 function LandingPage() {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const socket = useSocket();
 
     useEffect(() => {
@@ -49,9 +49,9 @@ function LandingPage() {
         }, "same")
         .from(".play_button_online_bt", {
             delay : 0,
-            y : -700,
+            y : -850,
             ease : "elastic.out(1,0.3)",
-            duration : 1.8
+            duration : 2
         });
     }, [loading]);
 
