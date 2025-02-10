@@ -11,9 +11,9 @@ function ChessTitle() {
                 <motion.span
                     key={index} 
                     className='inline'
-                    initial={{ y : "100%" }}
-                    animate={{ y : "0%" }}
-                    transition={{ delay: index * 0.2 }}
+                    initial={{  y : "100%", opacity : 0 }}
+                    animate={{ y : "0%", opacity : 1 }}
+                    transition={{ delay: index * 0.2 + 1}}
                 >
                     {item}
                 </motion.span>

@@ -94,7 +94,7 @@ const Loading = ({setLoading}) => {
       onComplete: () => setLoading(false)
     })
     ;
-  })
+  });
 
   return (
     <div className='loading_main relative overflow-hidden transition-all duration-200 h-screen text-zinc-900 w-screen text-[5rem] sm:text-[12rem] md:text-[15rem]'>
