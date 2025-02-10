@@ -15,7 +15,7 @@ import { useSocket } from '../hooks/useSocket.jsx';
 
 function LandingPage() {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const socket = useSocket();
 
     useEffect(() => {
