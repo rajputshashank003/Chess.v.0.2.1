@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 function Iwin({betAmount, betGame}) {
     const navigate = useNavigate();
     const handleNavigate = () => {
-        navigate("/game");
+        navigate("/");
     }
     const wallet = useWallet();
     const [sent ,setSent] = useState(false);
